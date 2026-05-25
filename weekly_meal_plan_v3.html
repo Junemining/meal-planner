@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แผนเมนูอาหาร + Shopping List — เริ่ม 23 พ.ค. 2569</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', 'Sarabun', sans-serif; background: #F7F6F2; padding: 20px; color: #2C2C2A; line-height: 1.6; }
+.container { max-width: 980px; margin: 0 auto; }
+h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+.sub { color: #5F5E5A; margin-bottom: 20px; font-size: 14px; }
+.hdr { background: #F1EFE8; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+.stat { text-align: center; flex: 1; min-width: 100px; }
+.sv { font-size: 20px; font-weight: 600; }
+.sl { font-size: 12px; color: #5F5E5A; margin-top: 4px; }
+
+/* Main tabs */
+.maintabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #D3D1C7; padding-bottom: 0; }
+.maintab { padding: 10px 20px; cursor: pointer; font-weight: 500; font-size: 15px; color: #5F5E5A; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+.maintab.active { color: #0F6E56; border-bottom-color: #0F6E56; }
+
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; font-size: 13px; color: #5F5E5A; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+.nav { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.nav button { background: #FFF; border: 1px solid #D3D1C7; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 14px; font-family: inherit; }
+.nav button:hover { background: #F1EFE8; }
+.nav button:disabled { opacity: 0.5; cursor: not-allowed; }
+.wl { font-size: 16px; font-weight: 600; flex: 1; text-align: center; }
+
+.hb { background: #FAEEDA; border: 1px solid #FAC775; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #633806; }
+.ob { background: #E6F1FB; border: 1px solid #85B7EB; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #185FA5; }
+
+.tabs { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+.tb { padding: 10px 12px; border-radius: 8px; border: 1px solid #D3D1C7; cursor: pointer; white-space: nowrap; background: #FFF; min-width: 84px; text-align: center; }
+.tb b { display: block; font-weight: 600; font-size: 13px; color: #2C2C2A; }
+.tb i { font-style: normal; font-size: 11px; color: #888780; }
+.tb.a { background: #1D9E75; border-color: #0F6E56; }
+.tb.a b, .tb.a i { color: #FFF; }
+.tb.h { border-color: #EF9F27; }
+.tb.h.a { background: #EF9F27; }
+.tb.h.a b, .tb.h.a i { color: #412402; }
+.tb.o { border-color: #378ADD; }
+.tb.o.a { background: #378ADD; }
+.tb.o.a b, .tb.o.a i { color: #FFF; }
+
+.mc { background: #FFF; border: 1px solid #D3D1C7; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+.mc.r { border-color: #EF9F27; border-width: 2px; }
+.mc.eat-out { background: #F7FAFD; border-color: #B5D4F4; border-style: dashed; }
+.mh { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.b { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
+.bf { background: #E1F5EE; color: #0F6E56; }
+.ln { background: #E6F1FB; color: #185FA5; }
+.dn { background: #EEEDFE; color: #3C3489; }
+.sp { background: #FAEEDA; color: #633806; }
+.st { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
+.tc { background: #EAF3DE; color: #3B6D11; }
+.t7 { background: #FCEBEB; color: #A32D2D; }
+.ts { background: #E6F1FB; color: #185FA5; }
+.th { background: #FAEEDA; color: #854F0B; }
+.to { background: #E6F1FB; color: #185FA5; }
+.tm { font-size: 12px; color: #888780; margin-left: auto; }
+.mn { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.mw { font-size: 12px; color: #5F5E5A; margin-bottom: 10px; }
+.mi { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.it { font-size: 12px; background: #F1EFE8; color: #5F5E5A; padding: 3px 8px; border-radius: 4px; }
+.no { font-size: 12px; color: #5F5E5A; padding: 8px 10px; background: #F1EFE8; border-radius: 8px; margin-bottom: 8px; }
+.rc { font-size: 12px; color: #5F5E5A; padding: 8px 12px; border-left: 3px solid #97C459; background: #F7F8F3; border-radius: 0 4px 4px 0; margin-bottom: 8px; }
+.rc b { color: #3B6D11; }
+.cl { font-size: 12px; color: #888780; }
+.cl b { font-weight: 600; color: #5F5E5A; }
+.rb { background: #FAEEDA; border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 13px; color: #633806; font-weight: 600; }
+.ds { background: #F1EFE8; border-radius: 8px; padding: 12px 16px; margin-top: 10px; display: flex; gap: 24px; flex-wrap: wrap; }
+.di { font-size: 13px; color: #888780; }
+.di b { font-weight: 600; color: #2C2C2A; }
+
+.summary { margin-top: 24px; padding: 16px 20px; background: #FFF; border: 1px solid #D3D1C7; border-radius: 12px; }
+.summary h3 { font-size: 16px; margin-bottom: 12px; font-weight: 600; }
+.summary ul { padding-left: 20px; font-size: 13px; color: #5F5E5A; line-height: 1.8; }
+
+/* Shopping List */
+.sl-view-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.sl-vt { padding: 8px 14px; border-radius: 8px; border: 1px solid #D3D1C7; cursor: pointer; background: #FFF; font-size: 13px; font-weight: 500; color: #5F5E5A; }
+.sl-vt.active { background: #534AB7; color: #FFF; border-color: #3C3489; }
+
+.sl-section { background: #FFF; border: 1px solid #D3D1C7; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+.sl-stitle { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 1px dashed #D3D1C7; }
+.sl-icon { font-size: 18px; }
+.sl-item { display: flex; gap: 12px; padding: 8px 0; font-size: 13px; border-bottom: 1px dashed #F1EFE8; align-items: flex-start; }
+.sl-item:last-child { border-bottom: none; }
+.sl-cb { margin-top: 3px; }
+.sl-name { flex: 1; }
+.sl-name b { font-weight: 600; }
+.sl-qty { color: #5F5E5A; font-size: 12px; min-width: 100px; text-align: right; }
+.sl-tip { font-size: 11px; color: #888780; margin-top: 3px; font-style: italic; }
+
+.round-badge { display: inline-block; background: #EEEDFE; color: #3C3489; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; margin-left: 6px; }
+.round-2 { background: #FAEEDA; color: #854F0B; }
+
+.budget-bar { background: #F1EFE8; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; }
+.budget-bar b { font-weight: 600; color: #2C2C2A; }
+
+@media (max-width: 600px) {
+  body { padding: 12px; }
+  .mh { gap: 6px; }
+  .b, .st { font-size: 10px; }
+  .mn { font-size: 14px; }
+  .maintab { padding: 8px 12px; font-size: 13px; }
+  .sl-qty { min-width: 70px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🍽️ แผนเมนูอาหาร + 📦 Shopping List</h1>
+<div class="sub">เริ่มสัปดาห์: ทุกวันเสาร์ • ส่งแผนใหม่: ศุกร์ 12:00 น. • เป้าหมาย: ลดน้ำหนัก + ดูแลความดัน คอเลสเตอรอล เบาหวาน</div>
+
+<div class="hdr">
+  <div class="stat"><div class="sv">1,600</div><div class="sl">เป้า kcal/วัน</div></div>
+  <div class="stat"><div class="sv">105 → 90</div><div class="sl">น้ำหนัก (กก.)</div></div>
+  <div class="stat"><div class="sv">เสาร์</div><div class="sl">วันเริ่มสัปดาห์</div></div>
+  <div class="stat"><div class="sv">ศ. 12:00</div><div class="sl">ส่งแผนใหม่</div></div>
+</div>
+
+<div class="maintabs">
+  <div class="maintab active" id="t-meal" onclick="switchTab('meal')">🍽️ เมนูรายวัน</div>
+  <div class="maintab" id="t-shop" onclick="switchTab('shop')">📦 Shopping List</div>
+</div>
+
+<!-- MEAL VIEW -->
+<div id="view-meal">
+<div class="legend">
+  <span><i class="dot" style="background:#97C459"></i>ทำเอง</span>
+  <span><i class="dot" style="background:#E24B4A"></i>7-Eleven</span>
+  <span><i class="dot" style="background:#378ADD"></i>ร้านอาหาร</span>
+  <span><i class="dot" style="background:#EF9F27"></i>🏠 ที่บ้าน</span>
+  <span><i class="dot" style="background:#85B7EB"></i>มื้อระหว่างเดินทาง</span>
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="cw(-1)">← สัปดาห์ก่อน</button>
+  <div class="wl" id="wl"></div>
+  <button id="next" onclick="cw(1)">สัปดาห์ถัดไป →</button>
+</div>
+
+<div id="hbc"></div>
+<div class="tabs" id="tabs"></div>
+<div id="mc"></div>
+</div>
+
+<!-- SHOPPING LIST VIEW -->
+<div id="view-shop" style="display:none">
+<div class="nav">
+  <button id="sprev" onclick="csw(-1)">← สัปดาห์ก่อน</button>
+  <div class="wl" id="swl"></div>
+  <button id="snext" onclick="csw(1)">สัปดาห์ถัดไป →</button>
+</div>
+
+<div class="ob" id="shop-info"></div>
+
+<div class="sl-view-tabs">
+  <div class="sl-vt active" id="sv-cat" onclick="switchSL('cat')">📂 ตามประเภท</div>
+  <div class="sl-vt" id="sv-day" onclick="switchSL('day')">📅 ตามวันที่ใช้</div>
+  <div class="sl-vt" id="sv-store" onclick="switchSL('store')">🏪 ตามร้าน</div>
+</div>
+
+<div id="shop-content"></div>
+</div>
+
+<div class="summary">
+<h3>💡 หลักการสำคัญสำหรับสุขภาพคุณ</h3>
+<ul>
+<li><b>ความดันโลหิตสูง:</b> โซเดียมไม่เกิน 2,000 มก./วัน — ขอ "น้ำปลาน้อย ซีอิ๊วน้อย" ทุกร้าน เลี่ยงอาหารแปรรูป (ลูกชิ้น ไส้กรอก แฮม)</li>
+<li><b>คอเลสเตอรอลสูง:</b> เน้นปลา (โอเมก้า-3) เต้าหู้ ถั่ว ข้าวโอ๊ต อะโวคาโด — หลีกเลี่ยงของทอด เครื่องในสัตว์ กะทิข้น</li>
+<li><b>ป้องกันเบาหวาน:</b> เลือกข้าวกล้องแทนข้าวขาว ขนมปังโฮลวีตแทนขนมปังขาว ลดน้ำตาลให้น้อยที่สุด ขอข้าวครึ่งทัพพี</li>
+<li><b>ลดน้ำหนัก:</b> ดื่มน้ำเปล่า 8 แก้ว/วัน เดิน 30 นาที/วัน นอน 7-8 ชม. งดเครื่องดื่มหวาน น้ำอัดลม น้ำผลไม้กล่อง</li>
+<li><b>ตู้เย็นเก็บได้ 3 วัน:</b> ซื้อรอบที่ 1 เย็นเสาร์ ใช้ เสาร์-อาทิตย์-จันทร์ • ซื้อรอบที่ 2 เย็นอังคาร ใช้ อังคาร-พุธ-พฤหัสฯ • ของแห้ง/Stock ซื้อทุก 2 สัปดาห์ตอนกลับบ้าน</li>
+</ul>
+</div>
+
+</div>
+
+<script>
+const D = ['เสาร์','อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์'];
+const dts = [
+['23พ.ค.','24พ.ค.','25พ.ค.','26พ.ค.','27พ.ค.','28พ.ค.','29พ.ค.'],
+['30พ.ค.','31พ.ค.','1มิ.ย.','2มิ.ย.','3มิ.ย.','4มิ.ย.','5มิ.ย.'],
+['6มิ.ย.','7มิ.ย.','8มิ.ย.','9มิ.ย.','10มิ.ย.','11มิ.ย.','12มิ.ย.'],
+['13มิ.ย.','14มิ.ย.','15มิ.ย.','16มิ.ย.','17มิ.ย.','18มิ.ย.','19มิ.ย.']
+];
+
+// Sources: c=cook at apartment, 7=7-Eleven, r=restaurant, h=home cook, o=eat out (travel)
+const W = [
+{l:'สัปดาห์ที่ 1 — 23-29 พ.ค. 2569', h:[], hd:[],
+d:[
+{bf:{s:'c',n:'ไข่ออมเลตผัก + ขนมปังโฮลวีต',i:['ไข่ 2 ฟอง','พริกหวาน หอมใหญ่','ขนมปังโฮลวีต 1 แผ่น'],c:340,nt:'ไข่+ผัก ช่วยให้อิ่มนาน',r:'ตีไข่ใส่ผักหั่นบาง ผัดในกระทะไฟฟ้าใช้น้ำมันมะกอก 1 ช้อนชา ปิ้งขนมปังคู่กัน'},
+ln:{s:'r',n:'ก๋วยเตี๋ยวเนื้อน้ำใส',i:['เส้นเล็ก','เนื้อต้ม','ผักบุ้ง'],c:480,nt:'ขอน้ำซุปใส ไม่ใส่น้ำมัน',w:'ร้านก๋วยเตี๋ยว'},
+dn:{s:'r',n:'ปลานึ่งมะนาว + ข้าวสวยน้อย',i:['ปลา 1 ตัว','มะนาว กระเทียม','ข้าวสวย ½ ทัพพี'],c:540,rw:true,nt:'มื้อพิเศษสัปดาห์! ปลานึ่งดีต่อคอเลสเตอรอล',w:'ร้านอาหารไทย'}},
+
+{bf:{s:'c',n:'ข้าวโอ๊ตนมไขมันต่ำ + กล้วย',i:['ข้าวโอ๊ต 40g','นมไขมันต่ำ 200ml','กล้วย ½ ใบ'],c:320,nt:'ใยอาหารสูง ช่วยลด LDL',r:'ต้มข้าวโอ๊ตในหม้อต้ม 5 นาที เติมนม หั่นกล้วยใส่'},
+ln:{s:'r',n:'ข้าวหน้าเต้าหู้ผัดผัก',i:['เต้าหู้','ผักรวม','ข้าวกล้อง ½ ทัพพี'],c:510,nt:'เต้าหู้ช่วยลดคอเลสเตอรอล',w:'ร้านข้าวราดแกง'},
+dn:{s:'r',n:'ต้มยำกุ้งน้ำใส',i:['กุ้ง 5 ตัว','เห็ด','ตะไคร้','ข้าวน้อย'],c:420,nt:'น้ำใสแคลอรีต่ำกว่าน้ำข้น 200 kcal',w:'ร้านอาหารทั่วไป'}},
+
+{bf:{s:'7',n:'โจ๊กหมูสับ + ไข่ต้ม',i:['โจ๊กถ้วย','ไข่ต้ม 1 ฟอง','ชาเขียวไม่หวาน'],c:340,nt:'เลือกสูตรน้ำตาลน้อย',w:'7-Eleven'},
+ln:{s:'r',n:'แกงเลียงผักรวมกุ้ง',i:['แกงเลียง','กุ้งสด','ข้าวกล้อง ½ ทัพพี'],c:490,nt:'แกงเลียงดีมากสำหรับความดัน',w:'ร้านข้าวราดแกง'},
+dn:{s:'c',n:'สลัดอกไก่ย่าง',i:['อกไก่ 100g','ผักสด','น้ำสลัดงา'],c:380,nt:'โปรตีนสูง ไขมันต่ำ',r:'ย่างอกไก่บนเตาไฟฟ้าจนสุก หั่น วางบนผักสด ราดน้ำสลัดงา 1 ช้อน'}},
+
+{bf:{s:'c',n:'ขนมปังโฮลวีต + ไข่ลวก + อะโวคาโด',i:['ขนมปังโฮลวีต 1','ไข่ลวก 2','อะโวคาโด ¼ ลูก'],c:380,nt:'ไขมันดีจากอะโวคาโด ช่วยลด LDL',r:'ปิ้งขนมปังในเตาปิ้ง ต้มไข่ลวก 6 นาที บดอะโวคาโดทาบนขนมปัง'},
+ln:{s:'7',n:'สลัดไก่ย่าง + นมไขมันต่ำ',i:['สลัดไก่ย่าง 7-11','นม UHT ไขมันต่ำ'],c:410,nt:'น้ำสลัดแยก ใช้แค่ครึ่งซอง',w:'7-Eleven'},
+dn:{s:'r',n:'ผัดผักรวมไก่',i:['ผักรวม','ไก่ไม่ติดหนัง','ข้าวกล้อง ½'],c:470,nt:'ขอน้ำมันน้อย ซีอิ๊วน้อย',w:'ร้านข้าวราดแกง'}},
+
+{bf:{s:'c',n:'ไข่ตุ๋นกุ้ง + ขนมปังโฮลวีต',i:['ไข่ 2','กุ้ง 3 ตัว','ขนมปังโฮลวีต 1'],c:360,nt:'โปรตีนคุณภาพสูง',r:'ตีไข่ใส่กุ้ง นึ่งในหม้อต้ม 10 นาที ปิ้งขนมปังคู่กัน'},
+ln:{s:'r',n:'ส้มตำไทยไก่ย่าง',i:['ส้มตำ','ไก่ย่าง','ข้าวเหนียวน้อย'],c:520,nt:'ขอน้ำปลาน้อย ไม่ใส่ปลาร้า',w:'ร้านส้มตำ'},
+dn:{s:'c',n:'ต้มจืดเต้าหู้หมูสับ',i:['เต้าหู้ขาว','หมูสับไม่ติดมัน','ผักกาดขาว'],c:380,nt:'แคลอรีต่ำ ทำง่าย',r:'ต้มน้ำในหม้อ ใส่หมูสับปั้นเป็นก้อน เต้าหู้ ผัก ปรุงรสด้วยซีอิ๊วเบา'}},
+
+{bf:{s:'7',n:'ข้าวโอ๊ตถ้วย + ไข่ต้ม + นม',i:['ข้าวโอ๊ตถ้วย 7-11','ไข่ต้ม','นมไขมันต่ำ'],c:360,nt:'ครบโปรตีน + ใยอาหาร ใช้เวลาน้อย',w:'7-Eleven'},
+ln:{s:'r',n:'ก๋วยเตี๋ยวเย็นตาโฟ',i:['เส้น','ผักบุ้ง','เกี๊ยว 3 ลูก'],c:450,nt:'หลีกเลี่ยงลูกชิ้นปลาแปรรูป โซเดียมสูง',w:'ร้านก๋วยเตี๋ยว'},
+dn:{s:'c',n:'ปลาแซลมอนย่าง + ผักย่าง',i:['ปลาแซลมอน 100g','บร็อคโคลี แครอท','มะนาว'],c:430,nt:'โอเมก้า-3 ช่วยลดไตรกลีเซอไรด์',r:'หมักปลาด้วยมะนาว เกลือเล็กน้อย ย่างบนเตาไฟฟ้า 4 นาทีต่อด้าน ผักย่างคู่กัน'}},
+
+{bf:{s:'c',n:'แซนด์วิชไข่ทูน่า',i:['ขนมปังโฮลวีต 2 แผ่น','ทูน่าน้ำเกลือ','ไข่ต้ม 1'],c:390,nt:'เลือกทูน่าในน้ำเกลือ ไม่ใช่น้ำมัน',r:'ปิ้งขนมปัง บดทูน่าผสมไข่ต้ม ใส่ใบโหระพา ไม่ใส่มายองเนส'},
+ln:{s:'7',n:'ข้าวกล่องอกไก่ + ผัก',i:['ข้าวกล่องอกไก่ 7-11','ผักสด'],c:470,nt:'เลือกข้าวกล่องที่ระบุ <500 kcal',w:'7-Eleven'},
+dn:{s:'r',n:'ยำวุ้นเส้นทะเล',i:['วุ้นเส้น','กุ้ง หมึก','ผักสด'],c:380,nt:'ขอน้ำยำหวานน้อย ไม่ใส่ถั่วลิสง',w:'ร้านอาหารทั่วไป'}}
+]},
+
+// สัปดาห์ที่ 2 — เสาร์-อาทิตย์อยู่ที่บ้าน, ศุกร์เย็น/อาทิตย์เย็น = ระหว่างทาง
+{l:'สัปดาห์ที่ 2 — 30 พ.ค. - 5 มิ.ย. 2569 🏠 (เสาร์-อา.)', h:[0,1], hd:[6,1], // hd: home days for dinner-out
+d:[
+// เสาร์ 30 พ.ค. - อยู่บ้าน
+{bf:{s:'h',n:'🏠 ข้าวต้มปลาขิง',i:['ข้าวกล้อง','ปลาเนื้อขาว','ขิงซอย ขึ้นฉ่าย'],c:400,nt:'มื้อเช้าที่บ้าน',w:'ทำเองที่บ้าน'},
+ln:{s:'h',n:'🏠 แกงส้มผักรวมกุ้ง',i:['แกงส้ม','กุ้งสด','ผักรวม','ข้าวกล้อง'],c:490,nt:'รสจัดน้อย เน้นเปรี้ยวจากมะขามธรรมชาติ',w:'ทำเองที่บ้าน'},
+dn:{s:'h',n:'🏠 ชาบูหมูสไลซ์ผักรวม',i:['หมูสไลซ์','ผักรวมมาก','วุ้นเส้น','น้ำซุปใส'],c:620,rw:true,nt:'มื้อพิเศษที่บ้าน! ผักให้เยอะกว่าเนื้อ',w:'ทำเองที่บ้าน'}},
+
+// อาทิตย์ 31 พ.ค. - อยู่บ้านครึ่งวัน เย็นเดินทางกลับ
+{bf:{s:'h',n:'🏠 ไข่กระทะกับขนมปัง',i:['ไข่ 2','แฮมไก่','ขนมปังโฮลวีต'],c:420,nt:'มื้อเช้าสไตล์โฮมเมด',w:'ทำเองที่บ้าน'},
+ln:{s:'h',n:'🏠 ปลาเก๋านึ่งซีอิ๊ว + ข้าวกล้อง',i:['ปลาเก๋า','ขิง','ต้นหอม','ข้าว ½'],c:480,nt:'ปลานึ่งไขมันต่ำ',w:'ทำเองที่บ้าน'},
+dn:{s:'o',n:'🚗 มื้อระหว่างเดินทางกลับ field',i:['เลือกอาหารเบาๆ','หลีกเลี่ยงของทอด','น้ำเปล่า'],c:450,nt:'แนะนำ: ข้าวต้ม/ก๋วยเตี๋ยวน้ำใส/สลัด/แซนด์วิชโฮลวีต',w:'ระหว่างเดินทาง'}},
+
+// จันทร์ 1 มิ.ย. - ใช้ของรอบเสาร์ที่ field (ใช้วันสุดท้ายของรอบ)
+{bf:{s:'c',n:'ข้าวโอ๊ตเค็มไข่ดาว',i:['ข้าวโอ๊ต','ไข่ดาว','ต้นหอม พริกไทย'],c:340,nt:'เปลี่ยนรสจากข้าวโอ๊ตหวาน',r:'ต้มข้าวโอ๊ตเป็นโจ๊ก ตีไข่ดาวในกระทะใช้น้ำมันน้อย ใส่ต้นหอม'},
+ln:{s:'r',n:'ข้าวหน้าปลาทูทอด + ผัก',i:['ปลาทู 1 ตัว','ผักลวก','ข้าวกล้อง'],c:520,nt:'ปลาทูช่วยลด LDL',w:'ร้านข้าวราดแกง'},
+dn:{s:'c',n:'ผัดบร็อคโคลีกุ้ง',i:['บร็อคโคลี','กุ้งสด 6','กระเทียม'],c:380,nt:'บร็อคโคลีดีต่อความดัน',r:'ผัดในกระทะไฟฟ้า น้ำมันมะกอก 1 ชช.'}},
+
+// อังคาร 2 มิ.ย. - ซื้อของรอบ 2 เย็นนี้
+{bf:{s:'7',n:'แซนด์วิชไก่ + นมไขมันต่ำ',i:['แซนด์วิช 7-11','นม UHT','กล้วย 1 ใบ'],c:380,nt:'เลือกแซนด์วิชโฮลวีต ไม่ใส่มายองเนสเยอะ',w:'7-Eleven'},
+ln:{s:'r',n:'ข้าวมันไก่ขอข้าวน้อย ลอกหนัง',i:['ไก่ลอกหนัง','ข้าวมัน ½ จาน','น้ำซุป'],c:520,nt:'ลอกหนังลดไขมันได้ ~30%',w:'ร้านข้าวมันไก่'},
+dn:{s:'c',n:'อกไก่ย่างกับสลัด',i:['อกไก่ 100g','ผักสด','น้ำสลัดงา'],c:390,nt:'มื้อเบาก่อนนอน',r:'หมักอกไก่ด้วยพริกไทยมะนาว ย่างเตาไฟฟ้า 5 นาทีต่อด้าน'}},
+
+{bf:{s:'c',n:'ไข่ต้ม + ขนมปังโฮลวีต + น้ำส้ม',i:['ไข่ต้ม 2','ขนมปังโฮลวีต','น้ำส้มคั้น 100ml'],c:340,nt:'อาหารเช้าง่ายๆ ใช้เวลา 8 นาที',r:'ต้มไข่ 7 นาที ปิ้งขนมปัง คั้นส้มสด (ห้ามใส่น้ำตาล)'},
+ln:{s:'7',n:'สลัดข้าวกล่อง + นมถั่วเหลือง',i:['สลัด 7-11','นมถั่วเหลืองไม่หวาน'],c:420,nt:'นมถั่วเหลืองช่วยลด LDL',w:'7-Eleven'},
+dn:{s:'r',n:'ต้มจืดมะระยัดไส้',i:['มะระ','หมูสับ','ข้าวน้อย'],c:420,nt:'มะระช่วยควบคุมน้ำตาลในเลือด',w:'ร้านข้าวราดแกง'}},
+
+{bf:{s:'c',n:'ขนมปังปิ้งเนยถั่ว + กล้วย',i:['ขนมปังโฮลวีต 1','เนยถั่ว 1 ชช','กล้วย ½'],c:330,nt:'เนยถั่วบริสุทธิ์ ไม่เติมน้ำตาล',r:'ปิ้งขนมปังในเตาปิ้ง ทาเนยถั่วบาง หั่นกล้วยวางด้านบน'},
+ln:{s:'r',n:'ข้าวหน้าไก่ต้ม',i:['ไก่ต้มฉีก','ข้าวกล้อง ½','น้ำซุปใส'],c:480,nt:'หลีกเลี่ยงข้าวหน้าไก่ทอด',w:'ร้านข้าวหน้า'},
+dn:{s:'r',n:'ส้มตำปูปลาร้าน้อย + ไก่ย่าง',i:['ส้มตำ','ไก่ย่างหน้าอก'],c:460,nt:'ขอน้ำปลาร้าน้อย เลี่ยงข้าวเหนียว',w:'ร้านส้มตำ'}},
+
+// ศุกร์ 5 มิ.ย. - เย็นเดินทางกลับบ้าน
+{bf:{s:'c',n:'โอ๊ตมีลผลไม้รวม',i:['ข้าวโอ๊ต','สตรอเบอร์รี','กล้วย','อัลมอนด์'],c:360,nt:'มื้อเช้าสุดท้ายก่อนกลับบ้าน',r:'แช่ข้าวโอ๊ตในนม ใส่ผลไม้และอัลมอนด์ก่อนทาน'},
+ln:{s:'r',n:'ก๋วยเตี๋ยวเรือน้ำใส',i:['เส้นเล็ก','เนื้อ','ผักบุ้ง'],c:450,nt:'ขอน้ำใส งดเลือดเพื่อลดเหล็กส่วนเกิน',w:'ร้านก๋วยเตี๋ยว'},
+dn:{s:'o',n:'🚗 มื้อระหว่างเดินทางกลับบ้าน',i:['อาหารเบาๆ','น้ำเปล่า','ผลไม้พกได้'],c:450,nt:'แนะนำ: ก๋วยเตี๋ยวน้ำใส/ข้าวต้ม/สลัด/แซนด์วิช',w:'ระหว่างเดินทาง'}}
+]},
+
+{l:'สัปดาห์ที่ 3 — 6-12 มิ.ย. 2569', h:[], hd:[],
+d:[
+{bf:{s:'c',n:'ไข่ตุ๋นเห็ดรวม + ขนมปัง',i:['ไข่ 2','เห็ดหอม เห็ดนางฟ้า','ขนมปังโฮลวีต'],c:350,nt:'เห็ดให้ใยอาหารและโพแทสเซียม',r:'ตีไข่กับน้ำซุปไก่ ใส่เห็ดหั่นบาง นึ่งในหม้อต้ม 12 นาที'},
+ln:{s:'r',n:'ข้าวหน้าปลาแซลมอน',i:['ปลาแซลมอน','ข้าวกล้อง ½','สลัด'],c:530,nt:'โอเมก้า-3 สูง',w:'ร้านญี่ปุ่น'},
+dn:{s:'r',n:'สเต๊กปลา + ผักย่าง + ข้าวน้อย',i:['ปลาดอลลี่ย่าง','ผักย่าง','ข้าวกล้อง ½'],c:580,rw:true,nt:'รางวัล! ปลาย่างแทนเนื้อแดง โซเดียมต่ำกว่า',w:'ร้านสเต๊ก'}},
+
+{bf:{s:'c',n:'แพนเค้กข้าวโอ๊ตกล้วย',i:['ข้าวโอ๊ตบด','กล้วย','ไข่ 1','นมไขมันต่ำ'],c:380,nt:'แพนเค้กโฮมเมดไม่ใส่น้ำตาล',r:'บดข้าวโอ๊ต ผสมกล้วยบด ไข่ นม ทอดในกระทะใช้น้ำมันน้อย'},
+ln:{s:'r',n:'แกงเขียวหวานไก่กะทิน้อย',i:['ไก่','มะเขือ','กะทิ Light','ข้าวกล้อง ½'],c:510,nt:'เลือกร้านที่ใช้กะทิน้อย',w:'ร้านข้าวราดแกง'},
+dn:{s:'c',n:'ต้มยำกุ้งน้ำใสทำเอง',i:['กุ้งสด','เห็ด','ตะไคร้','ใบมะกรูด'],c:380,nt:'ทำเองคุมโซเดียมได้',r:'ต้มน้ำในหม้อ ใส่ตะไคร้ใบมะกรูด ใส่กุ้งเห็ด ปรุงด้วยน้ำปลาน้อย+มะนาว'}},
+
+{bf:{s:'7',n:'โจ๊กข้าวกล้อง + ไข่ต้ม',i:['โจ๊ก 7-11','ไข่ต้ม','ขิงซอย'],c:350,nt:'เลือกสูตรไม่ใส่หมูยอ (โซเดียมสูง)',w:'7-Eleven'},
+ln:{s:'r',n:'ข้าวต้มปลากะพง',i:['ข้าวต้ม','ปลากะพง','ขึ้นฉ่าย','ขิง'],c:460,nt:'ข้าวต้มปลาดีต่อระบบย่อย',w:'ร้านข้าวต้ม'},
+dn:{s:'c',n:'ผัดผักโขมเต้าหู้',i:['ผักโขม','เต้าหู้','กระเทียม','ข้าวกล้อง ½'],c:410,nt:'แคลเซียมและธาตุเหล็กสูง',r:'ผัดเต้าหู้ก่อนให้เกรียม ใส่ผักโขม ปรุงด้วยซีอิ๊วเบา 1 ช้อนชา'}},
+
+{bf:{s:'c',n:'ขนมปังโฮลวีต + ไข่กวน + มะเขือเทศ',i:['ขนมปัง 1','ไข่ 2','มะเขือเทศ'],c:360,nt:'ไข่กวนใช้น้ำมันน้อย',r:'ตีไข่ใส่น้ำเล็กน้อย กวนในกระทะร้อนปานกลาง ใช้น้ำมัน 1 ช้อนชา'},
+ln:{s:'7',n:'พาสต้าซอสมะเขือเทศ',i:['พาสต้า 7-11','สลัด','นม'],c:480,nt:'ซอสมะเขือเทศแคลอรีต่ำกว่าครีม',w:'7-Eleven'},
+dn:{s:'r',n:'ปลาเผาเกลือ + ผักสด',i:['ปลาทับทิม','ผักสด','น้ำจิ้มซีฟู้ดน้อย'],c:430,nt:'ขอเกลือน้อย น้ำจิ้มแยก',w:'ร้านปลาเผา'}},
+
+{bf:{s:'c',n:'โยเกิร์ตกรานอลาผลไม้',i:['โยเกิร์ต Greek','กรานอลาไม่หวาน','บลูเบอร์รี'],c:330,nt:'โปรไบโอติกดีต่อระบบย่อย',r:'ตักโยเกิร์ตใส่ถ้วย โรยกรานอลาและผลไม้'},
+ln:{s:'r',n:'ข้าวคลุกกะปิลดข้าว',i:['ข้าวคลุกกะปิ ½','ไก่ฉีก','ผักเครื่องเคียง'],c:520,nt:'ขอข้าวครึ่งจาน เน้นเครื่องเคียง',w:'ร้านข้าวราดแกง'},
+dn:{s:'c',n:'ซุปเห็ดผักรวม',i:['เห็ดหลายชนิด','แครอท','บร็อคโคลี','ข้าวน้อย'],c:340,nt:'มื้อเบาก่อนนอน',r:'ต้มน้ำซุปผัก ใส่เห็ดและผัก ปรุงรสด้วยพริกไทย เกลือเล็กน้อย'}},
+
+{bf:{s:'7',n:'เบอร์ริโต้ไก่ + นมไขมันต่ำ',i:['เบอร์ริโต้ 7-11','นม UHT'],c:400,nt:'พกพาง่ายไปงาน',w:'7-Eleven'},
+ln:{s:'r',n:'ก๋วยเตี๋ยวต้มยำกุ้ง',i:['เส้นเล็ก','กุ้ง','ผักบุ้ง'],c:470,nt:'รสไม่จัด ขอน้ำมันน้อย',w:'ร้านก๋วยเตี๋ยว'},
+dn:{s:'c',n:'อกไก่อบสมุนไพร + บร็อคโคลีลวก',i:['อกไก่ 120g','บร็อคโคลี','แครอท'],c:400,nt:'อบโดยไม่ใช้น้ำมัน',r:'หมักอกไก่ด้วยพริกไทย โรสแมรี ใส่หม้ออเนกประสงค์โหมดอบ 25 นาที'}},
+
+{bf:{s:'c',n:'แซนด์วิชอกไก่ผักสด',i:['ขนมปังโฮลวีต 2','อกไก่','ผักกาด มะเขือเทศ'],c:380,nt:'มัสตาร์ดแทนมายองเนส',r:'ปิ้งขนมปัง ฉีกอกไก่ที่เหลือจากเมื่อวาน วางผัก ใส่มัสตาร์ดบาง'},
+ln:{s:'r',n:'ข้าวกะเพราไก่ไข่ดาว',i:['กะเพราไก่','ไข่ดาว','ข้าวน้อย'],c:540,nt:'ขอน้ำมันน้อย ไข่ดาวไม่กรอบ',w:'ร้านข้าวราดแกง'},
+dn:{s:'r',n:'สุกี้น้ำใสไม่ใส่ลูกชิ้น',i:['ผักรวม','เนื้อสไลซ์','วุ้นเส้น'],c:420,nt:'เลี่ยงลูกชิ้นแปรรูปทุกชนิด',w:'ร้านสุกี้'}}
+]},
+
+// สัปดาห์ที่ 4 — เสาร์-อาทิตย์อยู่ที่บ้าน
+{l:'สัปดาห์ที่ 4 — 13-19 มิ.ย. 2569 🏠 (เสาร์-อา.)', h:[0,1], hd:[6,1],
+d:[
+// เสาร์ 13 มิ.ย. - อยู่บ้าน + มื้อพิเศษ
+{bf:{s:'h',n:'🏠 ข้าวต้มกุ้งสด',i:['ข้าวกล้องต้ม','กุ้งสด','ขึ้นฉ่าย','ขิง'],c:420,nt:'มื้อเช้าอุ่นๆ ที่บ้าน',w:'ทำเองที่บ้าน'},
+ln:{s:'h',n:'🏠 แกงจืดเต้าหู้สาหร่าย',i:['เต้าหู้','สาหร่าย','หมูสับ','ข้าวกล้อง'],c:460,nt:'แคลอรีต่ำ ใยอาหารสูง',w:'ทำเองที่บ้าน'},
+dn:{s:'h',n:'🏠 ปิ้งย่างเกาหลีหมูสไลซ์',i:['หมูคอ-สันใน','ผักย่างเยอะ','ข้าวน้อย','กิมจิ'],c:640,rw:true,nt:'มื้อพิเศษ! เน้นย่างไม่ใส่น้ำมัน ผักเยอะกว่าเนื้อ 2 เท่า',w:'ทำเองที่บ้าน'}},
+
+// อาทิตย์ 14 มิ.ย.
+{bf:{s:'h',n:'🏠 ข้าวคลุกไข่กับผักดอง',i:['ข้าวกล้อง','ไข่ดาว','ผักดอง','ต้นหอม'],c:400,nt:'มื้อเช้าไทยๆ',w:'ทำเองที่บ้าน'},
+ln:{s:'h',n:'🏠 ผัดผักโขม + แซลมอนย่าง',i:['ผักโขม','แซลมอน','ข้าวน้อย'],c:500,nt:'มื้อหรูแบบสุขภาพ',w:'ทำเองที่บ้าน'},
+dn:{s:'o',n:'🚗 มื้อระหว่างเดินทางกลับ field',i:['อาหารเบาๆ','น้ำเปล่า','ผลไม้พกได้'],c:450,nt:'แนะนำ: ข้าวต้ม/ก๋วยเตี๋ยวน้ำใส/สลัด/แซนด์วิชโฮลวีต',w:'ระหว่างเดินทาง'}},
+
+// จันทร์ 15 มิ.ย.
+{bf:{s:'c',n:'ข้าวโอ๊ตเค็มกุ้ง',i:['ข้าวโอ๊ต','กุ้งฉีก','ขิง ต้นหอม'],c:350,nt:'รสคาวเปลี่ยนบรรยากาศ',r:'ต้มข้าวโอ๊ตให้ข้น ใส่กุ้งฉีก ขิงซอย โรยต้นหอม'},
+ln:{s:'r',n:'ข้าวยำปักษ์ใต้',i:['ข้าวยำ','ปลาร้าน้อย','ผักเครื่องเคียง'],c:480,nt:'ใยอาหารสูงจากผัก',w:'ร้านอาหารใต้'},
+dn:{s:'c',n:'หมึกย่างพริกเกลือ + ผัก',i:['หมึก 150g','ผักสลัด','มะนาว'],c:380,nt:'หมึกโปรตีนสูงไขมันต่ำ',r:'ย่างหมึกบนเตาไฟฟ้า 3 นาทีต่อด้าน บีบมะนาวเสิร์ฟกับสลัด'}},
+
+// อังคาร 16 มิ.ย. - ซื้อรอบ 2 เย็นนี้
+{bf:{s:'7',n:'แซนด์วิชทูน่า + นมถั่วเหลือง',i:['แซนด์วิช 7-11','นมถั่วเหลือง','กล้วย'],c:390,nt:'นมถั่วเหลืองดีต่อ LDL',w:'7-Eleven'},
+ln:{s:'r',n:'ข้าวหน้าหมูสับใส่ผัก',i:['หมูสับ','ผักรวม','ข้าวกล้อง ½'],c:500,nt:'ขอน้ำมันน้อย ผักเยอะ',w:'ร้านข้าวหน้า'},
+dn:{s:'c',n:'ปลาทูน่ายำพริกสด',i:['ทูน่ากระป๋อง','พริก หอม มะเขือเทศ'],c:360,nt:'ทำเร็ว เหมาะหลังเลิกงาน',r:'ผสมทูน่าน้ำเกลือสะเด็ดน้ำ ใส่หอมพริกซอย บีบมะนาว เสิร์ฟกับผัก'}},
+
+// พุธ 17 มิ.ย.
+{bf:{s:'c',n:'ขนมปังอะโวคาโดไข่ลวก',i:['ขนมปังโฮลวีต','อะโวคาโด ¼','ไข่ลวก'],c:380,nt:'ไขมันดี+โปรตีน',r:'บดอะโวคาโดทาขนมปังปิ้ง วางไข่ลวก โรยพริกไทยดำ'},
+ln:{s:'7',n:'ข้าวกล่องไก่อบ + ผัก',i:['ข้าวกล่อง 7-11','สลัดผัก'],c:460,nt:'เลือก <500 kcal',w:'7-Eleven'},
+dn:{s:'r',n:'สุกี้แห้งทะเลขอน้ำมันน้อย',i:['วุ้นเส้น','ทะเลรวม','ผักบุ้ง'],c:450,nt:'น้ำจิ้มสุกี้มีน้ำตาลสูง ใช้น้อย',w:'ร้านสุกี้'}},
+
+// พฤหัสบดี 18 มิ.ย.
+{bf:{s:'c',n:'พุดดิ้งเจียกล้วยข้าวโอ๊ต',i:['เมล็ดเจีย','นมไขมันต่ำ','กล้วย','ข้าวโอ๊ต'],c:340,nt:'เตรียมไว้ตั้งแต่คืนก่อน',r:'ผสมเจีย+ข้าวโอ๊ต+นม แช่ตู้เย็นข้ามคืน เช้าใส่กล้วยหั่น'},
+ln:{s:'r',n:'ข้าวผัดสับปะรดกุ้ง',i:['ข้าวผัด ½','สับปะรด','กุ้ง'],c:520,nt:'ขอน้ำมันน้อย เลี่ยงไส้กรอก',w:'ร้านข้าวผัด'},
+dn:{s:'r',n:'ปลานึ่งซีอิ๊วน้อย',i:['ปลา','ขิง','ต้นหอม','ข้าวน้อย'],c:420,nt:'ขอซีอิ๊วน้อยมาก โซเดียมต่ำ',w:'ร้านอาหารจีน'}},
+
+// ศุกร์ 19 มิ.ย. - เย็นเดินทางกลับบ้าน
+{bf:{s:'c',n:'ไข่คนผักรวม + ขนมปัง',i:['ไข่ 2','พริกหวาน หอม','ขนมปังโฮลวีต'],c:360,nt:'มื้อเช้าก่อนเดินทาง',r:'ตีไข่ใส่ผักหั่น คนในกระทะน้ำมันน้อย ปิ้งขนมปังคู่กัน'},
+ln:{s:'r',n:'ก๋วยเตี๋ยวเรือเส้นเล็ก',i:['เส้นเล็ก','เนื้อต้ม','ผักบุ้ง'],c:450,nt:'น้ำใส งดเลือด',w:'ร้านก๋วยเตี๋ยว'},
+dn:{s:'o',n:'🚗 มื้อระหว่างเดินทางกลับบ้าน',i:['อาหารเบาๆ','น้ำเปล่า','หลีกเลี่ยงของทอด'],c:450,nt:'แนะนำ: ข้าวต้ม/ก๋วยเตี๋ยวน้ำใส/สลัด/แซนด์วิช',w:'ระหว่างเดินทาง'}}
+]}
+];
+
+// ========== SHOPPING LISTS ==========
+// Each week has shopping list with: round1 (เสาร์), round2 (อังคาร), stock (every 2 weeks)
+const SHOP = [
+{ // สัปดาห์ที่ 1
+info: 'รอบที่ 1: ซื้อเสาร์ 23 พ.ค. เย็น (ใช้ เสาร์-อาทิตย์-จันทร์) • รอบที่ 2: ซื้อ อังคาร 26 พ.ค. เย็น (ใช้ อังคาร-พุธ-พฤหัส-ศุกร์)',
+hasStock: false,
+items: [
+// ROUND 1 — เสาร์-จันทร์
+{n:'ปลาเนื้อขาว (ปลาทับทิม/ดอลลี่)',q:'1 ตัว ~300g',cat:'protein',round:1,store:'market',tip:'แช่เย็นใช้ภายใน 2 วัน'},
+{n:'อกไก่ไม่ติดหนัง',q:'200g',cat:'protein',round:1,store:'lotus',tip:'แบ่ง 2 ห่อ แช่แข็ง 1 ห่อสำหรับวันจันทร์'},
+{n:'กุ้งสด',q:'150g (~10 ตัว)',cat:'protein',round:1,store:'market',tip:'ล้างแกะเปลือก เก็บในตู้เย็นช่องล่าง'},
+{n:'ไข่ไก่',q:'1 แผง (10 ฟอง)',cat:'protein',round:1,store:'lotus',tip:'เก็บนอกตู้เย็นได้'},
+{n:'นมไขมันต่ำ UHT',q:'4 กล่อง 200ml',cat:'drink',round:1,store:'lotus'},
+{n:'อะโวคาโด',q:'1 ลูก',cat:'fruit',round:1,store:'lotus',tip:'เลือกที่กดเบาๆ นิ่มลง'},
+{n:'กล้วยหอม',q:'1 หวี',cat:'fruit',round:1,store:'market',tip:'ไม่ต้องแช่ ทยอยทาน'},
+{n:'พริกหวานสี (เหลือง/แดง)',q:'1 ลูก',cat:'veg',round:1,store:'lotus'},
+{n:'หอมใหญ่',q:'1 หัว',cat:'veg',round:1,store:'market'},
+{n:'ผักสลัดรวม',q:'1 ถุง 200g',cat:'veg',round:1,store:'lotus',tip:'ใช้ให้หมดใน 3 วัน'},
+{n:'ผักกาดขาว',q:'½ หัว',cat:'veg',round:1,store:'market'},
+{n:'เต้าหู้ขาวอ่อน',q:'1 หลอด',cat:'protein',round:1,store:'lotus',tip:'เปิดใช้แล้วเก็บในน้ำ'},
+{n:'หมูสับไม่ติดมัน',q:'150g',cat:'protein',round:1,store:'market',tip:'แช่แข็งถ้าไม่ใช้ทันที'},
+{n:'น้ำส้มคั้นสดไม่หวาน',q:'1 ขวด 300ml',cat:'drink',round:1,store:'lotus'},
+
+// ROUND 2 — อังคาร-ศุกร์
+{n:'ปลาแซลมอนสด',q:'150g',cat:'protein',round:2,store:'lotus',tip:'หรือแช่แข็ง ละลายก่อนใช้ 1 คืน'},
+{n:'อกไก่ไม่ติดหนัง (รอบ 2)',q:'200g',cat:'protein',round:2,store:'lotus',tip:'ใช้สำหรับซุปและสลัด'},
+{n:'กุ้งสด (รอบ 2)',q:'100g',cat:'protein',round:2,store:'market'},
+{n:'หมึก',q:'150g',cat:'protein',round:2,store:'market'},
+{n:'ทูน่ากระป๋องในน้ำเกลือ',q:'1 กระป๋อง',cat:'protein',round:2,store:'lotus',tip:'อย่าซื้อแบบในน้ำมัน'},
+{n:'ไข่ไก่ (รอบ 2)',q:'½ แผง (5 ฟอง)',cat:'protein',round:2,store:'lotus'},
+{n:'มะเขือเทศ',q:'3-4 ลูก',cat:'veg',round:2,store:'market'},
+{n:'บร็อคโคลี',q:'1 หัวเล็ก',cat:'veg',round:2,store:'lotus'},
+{n:'แครอท',q:'2 หัว',cat:'veg',round:2,store:'market'},
+{n:'มะนาว',q:'4-5 ลูก',cat:'veg',round:2,store:'market'},
+{n:'ตะไคร้ ใบมะกรูด',q:'อย่างละ 1 กำ',cat:'veg',round:2,store:'market'},
+{n:'ผักบุ้ง',q:'1 กำ',cat:'veg',round:2,store:'market'},
+{n:'แตงกวา',q:'3 ลูก',cat:'veg',round:2,store:'market'},
+{n:'วุ้นเส้น',q:'1 มัด',cat:'carb',round:2,store:'lotus',tip:'ของแห้ง เก็บนาน'},
+
+// 7-Eleven (ซื้อตอนใช้)
+{n:'โจ๊กถ้วย 7-Eleven',q:'1 ถ้วย',cat:'shop7',round:'7',store:'7eleven',tip:'ซื้อตอนใช้ จันทร์ 25 พ.ค.'},
+{n:'สลัดไก่ย่าง 7-Eleven',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'พุธ 27 พ.ค.'},
+{n:'ข้าวกล่องอกไก่ 7-Eleven',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'ศุกร์ 29 พ.ค.'},
+{n:'ข้าวโอ๊ตถ้วย 7-Eleven',q:'1 ถ้วย',cat:'shop7',round:'7',store:'7eleven',tip:'พฤหัส 28 พ.ค.'}
+]},
+
+{ // สัปดาห์ที่ 2 - กลับบ้าน เสาร์-อา. ของแห้งซื้อรอบนี้
+info: 'เสาร์-อาทิตย์ที่บ้าน • รอบที่ 1: ซื้อ จันทร์ 1 มิ.ย. เช้า (ใช้ จันทร์-อังคาร-พุธ) • รอบที่ 2: ซื้อ อังคารเย็น/พุธเช้า (ใช้ พุธ-พฤหัส-ศุกร์) • 📦 รอบของแห้งซื้อตอนกลับบ้านสัปดาห์นี้',
+hasStock: true,
+items: [
+// ของแห้ง/Stock — ซื้อตอนกลับบ้านเสาร์ 30 พ.ค.
+{n:'ข้าวโอ๊ตรอลด์โอ๊ต',q:'1 กล่องใหญ่ 500g',cat:'stock',round:'stock',store:'lotus',tip:'ใช้ได้ 2 สัปดาห์'},
+{n:'ขนมปังโฮลวีต',q:'2 แพ็ค',cat:'stock',round:'stock',store:'lotus',tip:'แช่แข็ง 1 แพ็ค ทยอยใช้'},
+{n:'ทูน่ากระป๋องในน้ำเกลือ',q:'4 กระป๋อง',cat:'stock',round:'stock',store:'lotus'},
+{n:'น้ำมันมะกอก Extra Virgin',q:'1 ขวด 250ml',cat:'stock',round:'stock',store:'lotus',tip:'ใช้ผัดและน้ำสลัด'},
+{n:'เนยถั่วบริสุทธิ์ (ไม่เติมน้ำตาล)',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus',tip:'อ่านฉลาก: ส่วนผสมต้องมีแค่ถั่ว+เกลือ'},
+{n:'เมล็ดเจีย',q:'1 ถุง 200g',cat:'stock',round:'stock',store:'lotus'},
+{n:'อัลมอนด์อบไม่เค็ม',q:'1 ถุง 100g',cat:'stock',round:'stock',store:'lotus'},
+{n:'ข้าวกล้อง',q:'1 ถุง 1kg',cat:'stock',round:'stock',store:'lotus'},
+{n:'กรานอลาไม่หวาน',q:'1 กล่อง',cat:'stock',round:'stock',store:'lotus'},
+{n:'นมถั่วเหลืองไม่หวาน UHT',q:'6 กล่อง',cat:'stock',round:'stock',store:'lotus'},
+{n:'โยเกิร์ต Greek รสธรรมชาติ',q:'2 กระปุก',cat:'stock',round:'stock',store:'lotus',tip:'อ่านฉลาก: ไม่มีน้ำตาล'},
+{n:'น้ำสลัดงา (โซเดียมต่ำ)',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus'},
+{n:'พริกไทยดำเม็ด',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus'},
+{n:'โรสแมรีแห้ง',q:'1 ขวดเล็ก',cat:'stock',round:'stock',store:'lotus'},
+
+// ROUND 1 — จันทร์-พุธ (ของสด เมื่อกลับมา field)
+{n:'อกไก่ไม่ติดหนัง',q:'200g',cat:'protein',round:1,store:'lotus'},
+{n:'กุ้งสด',q:'200g',cat:'protein',round:1,store:'market'},
+{n:'หมูสับไม่ติดมัน',q:'150g',cat:'protein',round:1,store:'market'},
+{n:'ไข่ไก่',q:'1 แผง',cat:'protein',round:1,store:'lotus'},
+{n:'ผักสลัดรวม',q:'1 ถุง',cat:'veg',round:1,store:'lotus'},
+{n:'บร็อคโคลี',q:'1 หัว',cat:'veg',round:1,store:'lotus'},
+{n:'กระเทียม',q:'1 หัว',cat:'veg',round:1,store:'market'},
+{n:'มะระ',q:'1 ลูก',cat:'veg',round:1,store:'market',tip:'เลือกที่ผิวเขียวเข้ม'},
+{n:'นมไขมันต่ำ UHT (รอบ 1)',q:'4 กล่อง',cat:'drink',round:1,store:'lotus'},
+
+// ROUND 2 — พุธ-ศุกร์
+{n:'มะเขือเทศ',q:'4 ลูก',cat:'veg',round:2,store:'market'},
+{n:'กล้วยหอม',q:'½ หวี',cat:'fruit',round:2,store:'market'},
+{n:'ขิง',q:'1 ก้อน',cat:'veg',round:2,store:'market'},
+{n:'น้ำส้มคั้นสด',q:'1 ขวด',cat:'drink',round:2,store:'lotus'},
+
+// 7-Eleven
+{n:'แซนด์วิชโฮลวีต 7-Eleven',q:'1 ชิ้น',cat:'shop7',round:'7',store:'7eleven',tip:'อังคาร 2 มิ.ย.'},
+{n:'สลัดข้าวกล่อง 7-Eleven',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'พุธ 3 มิ.ย.'},
+{n:'นมถั่วเหลืองไม่หวาน 7-Eleven',q:'2 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'ถ้า stock หมด'}
+]},
+
+{ // สัปดาห์ที่ 3
+info: 'รอบที่ 1: ซื้อเสาร์ 6 มิ.ย. เย็น (ใช้ เสาร์-อาทิตย์-จันทร์) • รอบที่ 2: ซื้อ อังคาร 9 มิ.ย. เย็น (ใช้ อังคาร-พุธ-พฤหัส-ศุกร์)',
+hasStock: false,
+items: [
+// ROUND 1
+{n:'ไข่ไก่',q:'1 แผง',cat:'protein',round:1,store:'lotus'},
+{n:'เห็ดหอมสด',q:'150g',cat:'veg',round:1,store:'lotus'},
+{n:'เห็ดนางฟ้า',q:'150g',cat:'veg',round:1,store:'market'},
+{n:'กุ้งสด',q:'200g',cat:'protein',round:1,store:'market'},
+{n:'กล้วยหอม',q:'1 หวี',cat:'fruit',round:1,store:'market'},
+{n:'นมไขมันต่ำ UHT',q:'4 กล่อง',cat:'drink',round:1,store:'lotus'},
+{n:'มะเขือเทศ',q:'4 ลูก',cat:'veg',round:1,store:'market'},
+{n:'ตะไคร้',q:'2 ต้น',cat:'veg',round:1,store:'market'},
+{n:'ใบมะกรูด',q:'1 กำ',cat:'veg',round:1,store:'market'},
+
+// ROUND 2
+{n:'ผักโขม',q:'1 ถุง',cat:'veg',round:2,store:'lotus'},
+{n:'เต้าหู้ขาวอ่อน',q:'1 หลอด',cat:'protein',round:2,store:'lotus'},
+{n:'อกไก่ไม่ติดหนัง',q:'250g',cat:'protein',round:2,store:'lotus',tip:'ใช้สำหรับอบและแซนด์วิช'},
+{n:'บลูเบอร์รี/สตรอเบอร์รี',q:'1 กล่อง',cat:'fruit',round:2,store:'lotus'},
+{n:'แครอท',q:'2 หัว',cat:'veg',round:2,store:'market'},
+{n:'บร็อคโคลี',q:'1 หัว',cat:'veg',round:2,store:'lotus'},
+{n:'ผักกาด มะเขือเทศ (สำหรับแซนด์วิช)',q:'อย่างละ 1',cat:'veg',round:2,store:'market'},
+{n:'มัสตาร์ด (ขวดเล็ก)',q:'1 ขวด',cat:'condiment',round:2,store:'lotus',tip:'แทนมายองเนส'},
+
+// 7-Eleven
+{n:'โจ๊ก 7-Eleven',q:'1 ถ้วย',cat:'shop7',round:'7',store:'7eleven',tip:'จันทร์ 8 มิ.ย.'},
+{n:'พาสต้าซอสมะเขือเทศ 7-Eleven',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'อังคาร 9 มิ.ย.'},
+{n:'เบอร์ริโต้ไก่ 7-Eleven',q:'1 ชิ้น',cat:'shop7',round:'7',store:'7eleven',tip:'พฤหัส 11 มิ.ย.'}
+]},
+
+{ // สัปดาห์ที่ 4 - กลับบ้าน + stock
+info: 'เสาร์-อาทิตย์ที่บ้าน • รอบที่ 1: ซื้อ จันทร์ 15 มิ.ย. เช้า (ใช้ จันทร์-อังคาร-พุธ) • รอบที่ 2: ซื้อ อังคารเย็น/พุธเช้า (ใช้ พุธ-พฤหัส-ศุกร์) • 📦 รอบของแห้งซื้อตอนกลับบ้านสัปดาห์นี้',
+hasStock: true,
+items: [
+// ของแห้ง/Stock — รอบที่ 2
+{n:'ข้าวโอ๊ตรอลด์โอ๊ต',q:'1 กล่อง',cat:'stock',round:'stock',store:'lotus'},
+{n:'ขนมปังโฮลวีต',q:'2 แพ็ค',cat:'stock',round:'stock',store:'lotus',tip:'แช่แข็ง 1 แพ็ค'},
+{n:'ทูน่ากระป๋องในน้ำเกลือ',q:'4 กระป๋อง',cat:'stock',round:'stock',store:'lotus'},
+{n:'น้ำมันมะกอก',q:'½ ขวดเติม',cat:'stock',round:'stock',store:'lotus',tip:'ถ้ายังเหลือไม่ต้องซื้อ'},
+{n:'เนยถั่วบริสุทธิ์',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus',tip:'ถ้าหมด'},
+{n:'เมล็ดเจีย',q:'1 ถุงเติม',cat:'stock',round:'stock',store:'lotus'},
+{n:'อัลมอนด์อบไม่เค็ม',q:'1 ถุง',cat:'stock',round:'stock',store:'lotus'},
+{n:'นมถั่วเหลืองไม่หวาน UHT',q:'6 กล่อง',cat:'stock',round:'stock',store:'lotus'},
+{n:'โยเกิร์ต Greek',q:'2 กระปุก',cat:'stock',round:'stock',store:'lotus'},
+{n:'น้ำสลัดงา',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus',tip:'ถ้าหมด'},
+{n:'ซีอิ๊วเบาโซเดียมต่ำ',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus'},
+{n:'น้ำปลาดีโซเดียมต่ำ',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus'},
+
+// ROUND 1
+{n:'หมึก',q:'200g',cat:'protein',round:1,store:'market'},
+{n:'กุ้งสด',q:'150g',cat:'protein',round:1,store:'market'},
+{n:'ไข่ไก่',q:'1 แผง',cat:'protein',round:1,store:'lotus'},
+{n:'ขิง',q:'1 ก้อน',cat:'veg',round:1,store:'market'},
+{n:'ต้นหอม',q:'1 กำ',cat:'veg',round:1,store:'market'},
+{n:'ผักสลัดรวม',q:'1 ถุง',cat:'veg',round:1,store:'lotus'},
+{n:'มะนาว',q:'5 ลูก',cat:'veg',round:1,store:'market'},
+
+// ROUND 2
+{n:'ทูน่ากระป๋อง (รอบ 2)',q:'1 กระป๋อง',cat:'protein',round:2,store:'lotus',tip:'ใช้ stock ที่ซื้อมา'},
+{n:'อะโวคาโด',q:'1 ลูก',cat:'fruit',round:2,store:'lotus'},
+{n:'กล้วยหอม',q:'½ หวี',cat:'fruit',round:2,store:'market'},
+{n:'พริกหวาน',q:'1 ลูก',cat:'veg',round:2,store:'lotus'},
+{n:'หอมใหญ่',q:'1 หัว',cat:'veg',round:2,store:'market'},
+{n:'มะเขือเทศ',q:'3 ลูก',cat:'veg',round:2,store:'market'},
+
+// 7-Eleven
+{n:'แซนด์วิชทูน่า 7-Eleven',q:'1 ชิ้น',cat:'shop7',round:'7',store:'7eleven',tip:'อังคาร 16 มิ.ย.'},
+{n:'ข้าวกล่องไก่อบ 7-Eleven',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'พุธ 17 มิ.ย.'}
+]}
+];
+
+const CAT_META = {
+  protein: {icon:'🥩', label:'โปรตีน (เนื้อ ปลา ไข่ ถั่ว)'},
+  veg: {icon:'🥬', label:'ผัก/สมุนไพร'},
+  fruit: {icon:'🍎', label:'ผลไม้'},
+  carb: {icon:'🍞', label:'แป้ง/คาร์โบไฮเดรต'},
+  drink: {icon:'🥛', label:'เครื่องดื่ม'},
+  condiment: {icon:'🧂', label:'เครื่องปรุง'},
+  shop7: {icon:'🏪', label:'7-Eleven (ซื้อตอนใช้)'},
+  stock: {icon:'📦', label:'ของแห้ง/Stock (ทุก 2 สัปดาห์)'}
+};
+
+const STORE_META = {
+  lotus: {icon:'🛒', label:'Lotus\'s / Big C (ซูเปอร์มาร์เก็ต)'},
+  market: {icon:'🥬', label:'ตลาดสด'},
+  '7eleven': {icon:'🏪', label:'7-Eleven'}
+};
+
+const ROUND_META = {
+  1: {icon:'1️⃣', label:'รอบที่ 1 (เสาร์ เย็น) — ใช้ เสาร์-อา-จ.'},
+  2: {icon:'2️⃣', label:'รอบที่ 2 (อังคาร เย็น) — ใช้ อ-พ-พฤ-ศ.'},
+  '7': {icon:'🏪', label:'7-Eleven (ซื้อตอนใช้)'},
+  stock: {icon:'📦', label:'ของแห้ง/Stock (ตอนกลับบ้านทุก 2 สัปดาห์)'}
+};
+
+// State
+let cw_ = 0, cd = 0, csw_ = 0, slView = 'cat', mainView = 'meal';
+const sm = {'c':{c:'tc',l:'ทำเอง'}, '7':{c:'t7',l:'7-Eleven'}, 'r':{c:'ts',l:'ร้านอาหาร'}, 'h':{c:'th',l:'🏠 ที่บ้าน'}, 'o':{c:'to',l:'🚗 ระหว่างเดินทาง'}};
+
+function switchTab(t) {
+  mainView = t;
+  document.getElementById('t-meal').className = 'maintab' + (t === 'meal' ? ' active' : '');
+  document.getElementById('t-shop').className = 'maintab' + (t === 'shop' ? ' active' : '');
+  document.getElementById('view-meal').style.display = (t === 'meal' ? 'block' : 'none');
+  document.getElementById('view-shop').style.display = (t === 'shop' ? 'block' : 'none');
+  if (t === 'shop') renderShop();
+}
+
+function switchSL(v) {
+  slView = v;
+  document.querySelectorAll('.sl-vt').forEach(el => el.classList.remove('active'));
+  document.getElementById('sv-' + v).classList.add('active');
+  renderShopContent();
+}
+
+function cw(dir) {
+  cw_ = Math.max(0, Math.min(W.length-1, cw_+dir));
+  cd = 0;
+  rd();
+}
+
+function csw(dir) {
+  csw_ = Math.max(0, Math.min(SHOP.length-1, csw_+dir));
+  renderShop();
+}
+
+function sd(i) {
+  cd = i;
+  rm();
+  document.querySelectorAll('#tabs .tb').forEach((t, j) => {
+    const w = W[cw_];
+    const h = w.h.includes(j);
+    const o = w.hd && w.hd.includes(j);
+    t.className = 'tb' + (j === i ? ' a' : '') + (h ? ' h' : '') + (o ? ' o' : '');
+  });
+}
+
+function rm() {
+  const w = W[cw_], d = w.d[cd], ih = w.h.includes(cd);
+  const ms = [
+    {k:'bf', l:'เช้า', c:'bf', t:'07:00'},
+    {k:'ln', l:'กลางวัน', c:'ln', t:'12:00'},
+    {k:'dn', l:'เย็น', c:'dn', t:'18:30'}
+  ];
+  let tot = 0, h = '';
+  if (ih) h += '<div class="hb">🏠 วันนี้อยู่ที่บ้าน — ใช้ครัวเต็มรูปแบบ ยืดหยุ่นได้ ยังเน้นสุขภาพ</div>';
+  ms.forEach(m => {
+    const meal = d[m.k];
+    if (!meal) return;
+    tot += meal.c;
+    const r = meal.rw, si = sm[meal.s];
+    const isOut = meal.s === 'o';
+    h += '<div class="mc' + (r ? ' r' : '') + (isOut ? ' eat-out' : '') + '">';
+    if (r) h += '<div class="rb">🎉 มื้อพิเศษประจำสัปดาห์ — รางวัลของคุณ!</div>';
+    h += '<div class="mh"><span class="b ' + (r ? 'sp' : m.c) + '">' + m.l + '</span><span class="st ' + si.c + '">' + si.l + '</span><span class="tm">' + m.t + '</span></div>';
+    h += '<div class="mn">' + meal.n + '</div>';
+    h += '<div class="mw">📍 ' + (meal.w || 'ทำเองที่ที่พัก') + '</div>';
+    h += '<div class="mi">' + meal.i.map(x => '<span class="it">' + x + '</span>').join('') + '</div>';
+    h += '<div class="no">💡 ' + meal.nt + '</div>';
+    if (meal.r) h += '<div class="rc"><b>วิธีทำ:</b> ' + meal.r + '</div>';
+    h += '<div class="cl">พลังงาน: <b>~' + meal.c + ' kcal</b></div></div>';
+  });
+  h += '<div class="ds"><div class="di">รวมวันนี้: <b>~' + tot + ' kcal</b></div><div class="di">เป้า: <b>1,600 kcal</b></div><div class="di">ส่วนต่าง: <b style="color:' + (tot<=1700 ? '#0F6E56' : '#993C1D') + '">' + (tot<=1600 ? '-' : '+') + Math.abs(tot-1600) + ' kcal</b></div></div>';
+  document.getElementById('mc').innerHTML = h;
+}
+
+function rd() {
+  const w = W[cw_];
+  document.getElementById('wl').textContent = w.l;
+  document.getElementById('prev').disabled = (cw_ === 0);
+  document.getElementById('next').disabled = (cw_ === W.length-1);
+  document.getElementById('tabs').innerHTML = D.map((d, i) => {
+    const h = w.h.includes(i);
+    const o = w.hd && w.hd.includes(i);
+    let icon = '';
+    if (h) icon = ' 🏠';
+    else if (o) icon = ' 🚗';
+    return '<div class="tb' + (i === cd ? ' a' : '') + (h ? ' h' : '') + (o ? ' o' : '') + '" onclick="sd(' + i + ')"><b>' + d + icon + '</b><i>' + dts[cw_][i] + '</i></div>';
+  }).join('');
+  const hbc = document.getElementById('hbc');
+  if (w.h.length > 0) {
+    hbc.innerHTML = '<div class="hb">🏠 สัปดาห์นี้กลับบ้าน เสาร์-อาทิตย์ • มื้อเย็นศุกร์และอาทิตย์ทานระหว่างเดินทาง • มื้อพิเศษย้ายไปวันเสาร์ที่บ้าน</div>';
+  } else {
+    hbc.innerHTML = '';
+  }
+  rm();
+}
+
+function renderShop() {
+  const s = SHOP[csw_];
+  document.getElementById('swl').textContent = W[csw_].l;
+  document.getElementById('sprev').disabled = (csw_ === 0);
+  document.getElementById('snext').disabled = (csw_ === SHOP.length-1);
+  document.getElementById('shop-info').innerHTML = '🛒 ' + s.info;
+  renderShopContent();
+}
+
+function renderShopContent() {
+  const s = SHOP[csw_];
+  let html = '';
+  
+  if (slView === 'cat') {
+    // Group by category
+    const groups = {};
+    s.items.forEach(it => {
+      if (!groups[it.cat]) groups[it.cat] = [];
+      groups[it.cat].push(it);
+    });
+    const order = ['protein','veg','fruit','carb','condiment','drink','shop7','stock'];
+    order.forEach(cat => {
+      if (!groups[cat]) return;
+      const meta = CAT_META[cat];
+      html += '<div class="sl-section"><div class="sl-stitle"><span class="sl-icon">' + meta.icon + '</span>' + meta.label + '</div>';
+      groups[cat].forEach(it => {
+        html += renderItem(it, true);
+      });
+      html += '</div>';
+    });
+  } else if (slView === 'day') {
+    // Group by round
+    const groups = {};
+    s.items.forEach(it => {
+      const k = it.round;
+      if (!groups[k]) groups[k] = [];
+      groups[k].push(it);
+    });
+    const order = [1, 2, '7', 'stock'];
+    order.forEach(r => {
+      if (!groups[r]) return;
+      const meta = ROUND_META[r];
+      html += '<div class="sl-section"><div class="sl-stitle"><span class="sl-icon">' + meta.icon + '</span>' + meta.label + '</div>';
+      groups[r].forEach(it => {
+        html += renderItem(it, false);
+      });
+      html += '</div>';
+    });
+  } else if (slView === 'store') {
+    // Group by store
+    const groups = {};
+    s.items.forEach(it => {
+      if (!groups[it.store]) groups[it.store] = [];
+      groups[it.store].push(it);
+    });
+    const order = ['lotus','market','7eleven'];
+    order.forEach(st => {
+      if (!groups[st]) return;
+      const meta = STORE_META[st];
+      html += '<div class="sl-section"><div class="sl-stitle"><span class="sl-icon">' + meta.icon + '</span>' + meta.label + '</div>';
+      groups[st].forEach(it => {
+        html += renderItem(it, true);
+      });
+      html += '</div>';
+    });
+  }
+  
+  document.getElementById('shop-content').innerHTML = html;
+}
+
+function renderItem(it, showRoundBadge) {
+  let badge = '';
+  if (showRoundBadge) {
+    if (it.round === 1) badge = '<span class="round-badge">รอบ 1</span>';
+    else if (it.round === 2) badge = '<span class="round-badge round-2">รอบ 2</span>';
+    else if (it.round === '7') badge = '<span class="round-badge" style="background:#FCEBEB;color:#A32D2D">7-11</span>';
+    else if (it.round === 'stock') badge = '<span class="round-badge" style="background:#EAF3DE;color:#3B6D11">Stock</span>';
+  }
+  return '<div class="sl-item"><input type="checkbox" class="sl-cb"><div class="sl-name"><b>' + it.n + '</b>' + badge + (it.tip ? '<div class="sl-tip">💡 ' + it.tip + '</div>' : '') + '</div><div class="sl-qty">' + it.q + '</div></div>';
+}
+
+// Init
+rd();
+</script>
+</body>
+</html>
