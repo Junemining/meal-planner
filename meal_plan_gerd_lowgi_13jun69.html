@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แผนอาหาร 4 สัปดาห์ — กรดไหลย้อน & คุมน้ำตาล (13 มิ.ย. – 10 ก.ค. 69)</title>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFBF7; --card:#FFFFFF; --ink:#22312B; --mut:#5E6E66;
+  --green:#1B5E4A; --green-soft:#E3EFE9; --line:#DCE5DE;
+  --amber:#C77B30; --amber-soft:#FBF1E4;
+  --gerd:#B3503E; --gerd-soft:#F9E9E5;
+  --dm:#2D5E8C; --dm-soft:#E7EFF7;
+  --home:#7A5CA8; --home-soft:#F0EAF8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:48px}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px}
+header{background:var(--green);color:#fff;padding:22px 0 18px}
+header .wrap{display:flex;flex-direction:column;gap:8px}
+h1{font-family:'Anuphan',sans-serif;font-size:1.35rem;font-weight:700;line-height:1.3}
+.sub{font-size:.85rem;opacity:.88}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.badge{font-size:.74rem;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16)}
+.rules{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden}
+.rules summary{cursor:pointer;padding:12px 16px;font-family:'Anuphan';font-weight:600;font-size:.95rem;color:var(--green);list-style:none;display:flex;justify-content:space-between;align-items:center}
+.rules summary::after{content:'▾';color:var(--mut)}
+.rules[open] summary::after{content:'▴'}
+.rules .body{padding:0 16px 14px;font-size:.85rem;color:var(--mut);line-height:1.7}
+.rules b{color:var(--ink)}
+.rules .rg{color:var(--gerd);font-weight:600}
+.rules .rd{color:var(--dm);font-weight:600}
+.maintabs{display:flex;gap:8px;margin:6px 0 14px}
+.maintab{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-family:'Anuphan';font-weight:600;font-size:.95rem;color:var(--mut);cursor:pointer}
+.maintab.active{background:var(--green);border-color:var(--green);color:#fff}
+.weeknav{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:12px}
+.weeknav button{border:none;background:var(--green-soft);color:var(--green);width:36px;height:36px;border-radius:10px;font-size:1.05rem;cursor:pointer;font-weight:700}
+.weeknav button:disabled{opacity:.3;cursor:default}
+.wk-label{font-family:'Anuphan';font-weight:700;font-size:.95rem;text-align:center}
+.wk-label small{display:block;font-family:'Sarabun';font-weight:500;color:var(--mut);font-size:.74rem;margin-top:2px}
+.daytabs{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:14px}
+.dt{padding:8px 2px;text-align:center;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:.78rem;font-weight:600;cursor:pointer;color:var(--mut)}
+.dt small{display:block;font-size:.66rem;font-weight:500;margin-top:1px}
+.dt.a{background:var(--green);border-color:var(--green);color:#fff}
+.dt.h:not(.a){background:var(--home-soft);border-color:#D8CCEC;color:var(--home)}
+.dt.rw:not(.a){border-color:var(--amber);color:var(--amber)}
+.banner{border-radius:12px;padding:10px 14px;font-size:.84rem;font-weight:600;margin-bottom:12px}
+.banner.home{background:var(--home-soft);color:var(--home)}
+.mc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.mc.reward{border-color:var(--amber);background:linear-gradient(0deg,var(--amber-soft),#fff)}
+.rwb{font-size:.8rem;font-weight:700;color:var(--amber);margin-bottom:8px}
+.mh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.mb{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px}
+.b-bf{background:#FDF3E0;color:#9A6A12}.b-ln{background:#E5F1EA;color:#1B6B45}.b-dn{background:#E9EBF6;color:#3C4A8F}.b-sp{background:var(--amber);color:#fff}
+.src{font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
+.src.tc{background:var(--green-soft);color:var(--green);border-color:transparent}
+.src.t7{background:#E6F4EC;color:#0E7A3D;border-color:transparent}
+.src.ts{background:#FBEEE4;color:#A35B22;border-color:transparent}
+.src.th{background:var(--home-soft);color:var(--home);border-color:transparent}
+.src.to{background:#EEF1F4;color:#51606C;border-color:transparent}
+.mt{margin-left:auto;font-size:.74rem;color:var(--mut);font-weight:600}
+.mn{font-family:'Anuphan';font-weight:600;font-size:1.02rem;line-height:1.4;margin-bottom:6px}
+.items{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.it{font-size:.76rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;color:var(--mut)}
+.note{font-size:.8rem;color:var(--mut);line-height:1.6}
+.note .rg{color:var(--gerd);font-weight:600}.note .rd{color:var(--dm);font-weight:600}
+.rcp{margin-top:8px;font-size:.8rem;background:var(--green-soft);border-radius:10px;padding:8px 12px;color:var(--green);line-height:1.6}
+.cal{margin-top:8px;font-size:.78rem;font-weight:700;color:var(--green)}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:4px}
+.sum .t{font-family:'Anuphan';font-weight:700;font-size:.9rem;margin-bottom:8px}
+.sum .row{display:flex;flex-wrap:wrap;gap:10px;font-size:.82rem;color:var(--mut)}
+.sum .row span b{color:var(--green)}
+.snack{margin-top:10px;font-size:.78rem;background:var(--dm-soft);color:var(--dm);border-radius:10px;padding:8px 12px;line-height:1.6}
+.slviews{display:flex;gap:6px;margin-bottom:12px}
+.sl-vt{flex:1;padding:8px;font-size:.8rem;font-weight:600;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--mut);cursor:pointer}
+.sl-vt.active{background:var(--green);border-color:var(--green);color:#fff}
+.slinfo{font-size:.8rem;color:var(--mut);background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px;line-height:1.7}
+.grp{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.grp .gh{padding:10px 14px;font-family:'Anuphan';font-weight:600;font-size:.9rem;background:var(--green-soft);color:var(--green)}
+.gi{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-top:1px solid var(--line);font-size:.85rem}
+.gi input{margin-top:3px;accent-color:var(--green);width:16px;height:16px}
+.gi .nm{font-weight:600}
+.gi .q{color:var(--mut);font-size:.78rem}
+.gi .tip{color:var(--mut);font-size:.76rem;margin-top:2px;line-height:1.5}
+.gi.done .nm{text-decoration:line-through;color:var(--mut)}
+footer{margin-top:24px;text-align:center;font-size:.74rem;color:var(--mut);line-height:1.7}
+@media (max-width:420px){h1{font-size:1.15rem}.mt{margin-left:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>แผนอาหาร 4 สัปดาห์ · 13 มิ.ย. – 10 ก.ค. 2569</h1>
+<div class="sub">เริ่มเสาร์ 13 มิ.ย. · กลับบ้านสุดสัปดาห์ 26–28 มิ.ย. (ศุกร์เย็นเดินทาง) · รอบถัดไป 10–12 ก.ค.</div>
+<div class="badges">
+<span class="badge">🔥 ปรับสำหรับกรดไหลย้อน</span>
+<span class="badge">🩸 GI ต่ำ · คุมเสี่ยงเบาหวาน</span>
+<span class="badge">🎯 ~1,500 kcal/วัน</span>
+</div>
+</div></header>
+
+<div class="wrap">
+<details class="rules"><summary>📋 กฎประจำวัน (กรดไหลย้อน + คุมน้ำตาล) — กดเปิดอ่าน</summary>
+<div class="body">
+<b class="rg">🔥 กรดไหลย้อน</b><br>
+• มื้อเย็นกินก่อน <b>18:30</b> และเว้นอย่างน้อย <b>3 ชม.ก่อนนอน</b> ห้ามเอนตัว/นอนหลังกินทันที<br>
+• มื้อเย็นให้ "เบาที่สุดของวัน" — แผนนี้จัดมื้อเย็นเล็กกว่ามื้ออื่นแล้ว<br>
+• งด: ของทอด ของมันจัด แกงกะทิ เผ็ดจัด น้ำอัดลม ช็อกโกแลต กาแฟ/ชาเข้มหลังเที่ยง แอลกอฮอล์<br>
+• เลี่ยงเปรี้ยวจัด (ส้ม สับปะรด มะเขือเทศปริมาณมาก ยำ/ส้มตำรสจัด) โดยเฉพาะมื้อเย็น<br>
+• กินช้า ๆ อิ่ม 80% — แผนนี้เพิ่มของว่าง 2 มื้อเพื่อให้แต่ละมื้อเล็กลง<br><br>
+<b class="rd">🩸 คุมน้ำตาล (เสี่ยงเบาหวาน)</b><br>
+• ใช้<b>ข้าวกล้อง/โฮลวีต</b>แทนข้าวขาว-ขนมปังขาว มื้อเย็นข้าวครึ่งทัพพี<br>
+• <b>งดเครื่องดื่มหวานทุกชนิด</b> น้ำเปล่า/นมจืดพร่องมันเนย/นมถั่วเหลืองไม่หวานเท่านั้น<br>
+• ผลไม้ GI ต่ำ ครั้งละ 1 ส่วน: ฝรั่ง แอปเปิ้ล แก้วมังกร กล้วยครึ่ง–1 ลูก<br>
+• กินผัก-โปรตีนก่อน แล้วค่อยกินข้าว ช่วยให้น้ำตาลขึ้นช้าลง<br>
+• เดินเบา ๆ 10–15 นาทีหลังมื้อหลัก ช่วยทั้งน้ำตาลและกรดไหลย้อน<br><br>
+<b>⏰ เวลามาตรฐาน:</b> เช้า 07:00 · ว่าง 09:30 · กลางวัน 12:00 · ว่าง 15:00 · เย็น 18:00–18:30
+</div>
+</details>
+
+<div class="maintabs">
+<button id="t-meal" class="maintab active" onclick="switchTab('meal')">🍽️ เมนูรายวัน</button>
+<button id="t-shop" class="maintab" onclick="switchTab('shop')">🛒 Shopping List</button>
+</div>
+
+<div id="view-meal">
+<div class="weeknav">
+<button id="wprev" onclick="cw(-1)">‹</button>
+<div class="wk-label" id="wlabel"></div>
+<button id="wnext" onclick="cw(1)">›</button>
+</div>
+<div class="daytabs" id="tabs"></div>
+<div id="meal-content"></div>
+</div>
+
+<div id="view-shop" style="display:none">
+<div class="weeknav">
+<button id="sprev" onclick="csw(-1)">‹</button>
+<div class="wk-label" id="slabel"></div>
+<button id="snext" onclick="csw(1)">›</button>
+</div>
+<div class="slviews">
+<button id="sv-cat" class="sl-vt active" onclick="switchSL('cat')">ตามหมวด</button>
+<button id="sv-round" class="sl-vt" onclick="switchSL('round')">ตามรอบซื้อ</button>
+<button id="sv-store" class="sl-vt" onclick="switchSL('store')">ตามร้าน</button>
+</div>
+<div class="slinfo" id="slinfo"></div>
+<div id="shop-content"></div>
+</div>
+
+<footer>เก็บของสดไม่เกิน 3 วัน · 7-Eleven ไม่เกิน 3 มื้อ/สัปดาห์ · แผนนี้ปรับสูตรทุกเมนูให้ปลอดภัยต่อกรดไหลย้อนและคุมน้ำตาล<br>หากมีอาการแสบร้อนกลางอกบ่อยขึ้น หรือผลตรวจน้ำตาลผิดปกติ ควรพบแพทย์เพื่อประเมินเพิ่มเติม</footer>
+</div>
+
+<script>
+const DAYS=['เสาร์','อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์'];
+// s: c=ทำเอง 7=เซเว่น r=ร้านอาหาร h=ที่บ้าน o=เดินทาง | rw=มื้อพิเศษ
+const W=[
+{r:'สัปดาห์ 1 · 13–19 มิ.ย. 69',sub:'อยู่ที่พัก (ไซต์งาน)',lbl:['13','14','15','16','17','18','19'],h:[],hd:[],d:[
+{bf:{n:'ข้าวต้มปลานิล ขิงอ่อน',s:'c',c:320,i:['ปลานิล','ข้าวกล้องต้ม','ขิงอ่อน','ต้นหอม-ขึ้นฉ่าย'],nt:'<span class="rg">ขิงช่วยลดอาการกรดไหลย้อน</span> เริ่มสัปดาห์ด้วยมื้ออุ่นย่อยง่าย',rc:'ต้มข้าวกล้องกับน้ำซุปในหม้ออเนกประสงค์ ใส่เนื้อปลานิล ขิงซอย ปรุงซีอิ๊วขาวเล็กน้อย'},
+ln:{n:'ข้าวกล้อง + อกไก่ย่าง + ผักลวก',s:'c',c:480,i:['ข้าวกล้อง 1 ทัพพี','อกไก่ย่าง 120 ก.','คะน้า-กวางตุ้งลวก','น้ำจิ้มซีอิ๊วพริกน้อย'],nt:'<span class="rd">กินผักและไก่ก่อนข้าว</span> น้ำตาลขึ้นช้าลง',rc:'หมักอกไก่ซีอิ๊วขาว+พริกไทยนิด ย่างเตาไฟฟ้าด้านละ 5–6 นาที'},
+dn:{n:'แกงจืดเต้าหู้ไข่หมูสับ + ข้าวกล้องครึ่งทัพพี',s:'c',c:380,i:['เต้าหู้ไข่','หมูสับไม่ติดมัน','ผักกาดขาว','ข้าวกล้องครึ่งทัพพี'],nt:'<span class="rg">มื้อเย็นเบา จบก่อน 18:30 แล้วเดินเล่น 10 นาที</span>',rc:'ต้มน้ำเดือด ใส่หมูสับปั้นก้อน เต้าหู้ ผักกาดขาว ปรุงเบา ๆ'}},
+{bf:{n:'โอ๊ตต้มนมพร่องมันเนย + กล้วยหอมครึ่งลูก',s:'c',c:300,i:['ข้าวโอ๊ต 40 ก.','นมจืดพร่องมันเนย','กล้วยหอมครึ่งลูก'],nt:'<span class="rd">โอ๊ต GI ต่ำ ใยอาหารสูง</span> ไม่เติมน้ำตาล/น้ำผึ้ง',rc:'ต้มโอ๊ตกับนม 5 นาทีในหม้อเล็ก หั่นกล้วยโรยหน้า'},
+ln:{n:'ก๋วยเตี๋ยวไก่น้ำใส ไม่ใส่พริก + ลวกผักเพิ่ม',s:'r',c:420,i:['เส้นเล็ก','ไก่ฉีก','ถั่วงอก-ผักบุ้งลวก'],nt:'สั่ง "ไม่พริก ไม่กระเทียมเจียว น้ำซุปใส" <span class="rg">เลี่ยงน้ำส้มสายชูปรุง</span>'},
+dn:{n:'ปลาทับทิมนึ่งซีอิ๊ว + ผักนึ่ง + ข้าวกล้องน้อย',s:'c',c:420,i:['ปลาทับทิมครึ่งตัว','บรอกโคลี-แครอทนึ่ง','ข้าวกล้องครึ่งทัพพี'],nt:'นึ่งแทนทอด <span class="rg">ไขมันต่ำ ไม่กระตุ้นกรด</span>',rc:'นึ่งปลากับขิงซอย-ต้นหอมในหม้ออเนกประสงค์ 12 นาที ราดซีอิ๊วขาวอุ่น'}},
+{bf:{n:'แซนด์วิชโฮลวีตอกไก่ + นมจืดพร่องมันเนย',s:'7',c:350,i:['แซนด์วิชโฮลวีตอกไก่','นมจืดพร่องมันเนย'],nt:'7-Eleven มื้อที่ 1/3 ของสัปดาห์ <span class="rd">เลือกโฮลวีต ไม่เอาน้ำหวาน</span>'},
+ln:{n:'ร้านข้าวแกง: แกงจืดมะระ + ปลานึ่ง + ข้าวกล้อง',s:'r',c:450,i:['แกงจืดมะระยัดไส้','ปลานึ่ง','ข้าวกล้อง (ถ้ามี) หรือข้าวขาวพูนน้อย'],nt:'เลี่ยงแกงกะทิ-ผัดมัน ๆ ตักราดน้ำแกงแต่น้อย'},
+dn:{n:'ไข่ตุ๋นทรงเครื่อง + ผักลวก + ข้าวกล้องครึ่งทัพพี',s:'c',c:360,i:['ไข่ 2 ฟอง','เห็ดหอม-แครอท','ผักลวก','ข้าวกล้องครึ่งทัพพี'],nt:'<span class="rg">ไข่ตุ๋นนุ่ม ย่อยง่าย เหมาะกับมื้อเย็น</span>',rc:'ตีไข่กับน้ำซุปอัตรา 1:1.5 ใส่เห็ด-แครอท นึ่งไฟอ่อน 12 นาที'}},
+{bf:{n:'ข้าวต้มไก่ฉีก ขิง',s:'c',c:320,i:['ข้าวกล้องต้ม','อกไก่ฉีก','ขิงซอย','ผักชี-ต้นหอม'],nt:'ใช้ไก่ที่ย่างเหลือจากเมื่อวานฉีกใส่ได้',rc:'ต้มข้าวกับน้ำซุป ใส่ไก่ฉีก ขิง ปรุงซีอิ๊วขาวนิดเดียว'},
+ln:{n:'สุกี้น้ำไก่ น้ำจิ้มแยก-จิ้มน้อย',s:'r',c:430,i:['วุ้นเส้น','ไก่','ผักกาดขาว-ผักบุ้ง','ไข่'],nt:'<span class="rg">ขอน้ำจิ้มแยก จิ้มน้อย ๆ (เผ็ด-เปรี้ยวกระตุ้นกรด)</span> วุ้นเส้น GI ต่ำกว่าเส้นอื่น'},
+dn:{n:'อกไก่ย่าง + สลัดผักน้ำใสงาคั่ว',s:'c',c:400,i:['อกไก่ 120 ก.','ผักสลัด','แตงกวา-แครอท','น้ำสลัดใสงาคั่ว 1 ชต.'],nt:'<span class="rd">มื้อเย็นแทบไม่มีแป้ง น้ำตาลตอนเช้าจะสวย</span>',rc:'ย่างอกไก่เตาไฟฟ้า หั่นวางบนผัก ราดน้ำสลัดใสบาง ๆ'}},
+{bf:{n:'ขนมปังโฮลวีตปิ้ง + ไข่ต้ม 2 ฟอง + ฝรั่ง',s:'c',c:340,i:['โฮลวีตปิ้ง 2 แผ่น','ไข่ต้ม 2 ฟอง','ฝรั่งครึ่งลูก'],nt:'<span class="rd">ฝรั่ง GI ต่ำ วิตามินซีสูง</span>',rc:'ปิ้งขนมปังด้วยเครื่องปิ้ง ต้มไข่ 8 นาที'},
+ln:{n:'ข้าวกล้องไก่ย่าง 7-Eleven (เลือกไม่เผ็ด)',s:'7',c:450,i:['กล่องข้าวกล้องไก่ย่าง','เลือกสูตรไม่เผ็ด'],nt:'7-Eleven มื้อที่ 2/3 — ดูฉลาก เลือกกล่องโซเดียม < 800 มก.'},
+dn:{n:'สเต๊กปลาแซลมอนย่าง + มันฝรั่งอบ + ผักย่าง',s:'c',c:550,rw:1,i:['แซลมอน 150 ก.','มันฝรั่งอบ 1 หัวเล็ก','ซูกินี-เห็ด-พริกหวานย่าง'],nt:'มื้อพิเศษประจำสัปดาห์! <span class="rg">ย่างไม่ทอด ซอสเบา ๆ</span> กินช้า ๆ ให้อร่อยเต็มที่ จบก่อน 19:00',rc:'ย่างแซลมอนกระทะไฟฟ้าด้านละ 4 นาที โรยเกลือ-พริกไทยนิด มันฝรั่งห่อฟอยล์อบในหม้ออเนกประสงค์'}},
+{bf:{n:'โจ๊กหมูไม่ติดมัน ไข่ลวก (งดกระเทียมเจียว)',s:'r',c:350,i:['โจ๊กหมู','ไข่ลวก','ขิงซอยเยอะ ๆ'],nt:'<span class="rg">สั่ง "ไม่กระเทียมเจียว ไม่พริกไทยเยอะ"</span>'},
+ln:{n:'ข้าวกล้อง + เต้าหู้ผัดผักรวมน้ำมันน้อย',s:'c',c:430,i:['ข้าวกล้อง 1 ทัพพี','เต้าหู้ขาวแข็ง','ผักรวม','น้ำมันรำข้าว 1 ชช.'],nt:'<span class="rd">โปรตีนพืช + ผักเยอะ อิ่มนานน้ำตาลนิ่ง</span>',rc:'ผัดในกระทะไฟฟ้าด้วยน้ำมันน้อย เติมน้ำซุปแทนน้ำมันถ้าแห้ง'},
+dn:{n:'ซุปไก่ฟักทอง + ขนมปังโฮลวีต 1 แผ่น',s:'c',c:380,i:['อกไก่','ฟักทอง','หอมใหญ่ต้มสุก','โฮลวีต 1 แผ่น'],nt:'<span class="rg">ฟักทองต้มสุกนุ่ม อ่อนโยนกับกระเพาะ</span> หอมใหญ่ต้องสุกเท่านั้น',rc:'ต้มไก่กับฟักทองจนนุ่มในหม้ออเนกประสงค์ บดหยาบ ปรุงเกลือนิด'}},
+{bf:{n:'โยเกิร์ตกรีกไม่หวาน + กล้วย + ข้าวโอ๊ต',s:'7',c:320,i:['โยเกิร์ตกรีกไม่หวาน','กล้วยหอม 1 ลูก','ข้าวโอ๊ตโรย'],nt:'7-Eleven มื้อที่ 3/3 <span class="rd">เช็กฉลาก: น้ำตาล < 5 ก.</span>'},
+ln:{n:'ร้านข้าวแกง: ปลาทูนึ่ง + ผักลวก + แกงจืด',s:'r',c:460,i:['ปลาทูนึ่ง (ไม่ทอด) 2 ตัว','ผักลวก','แกงจืดผัก','ข้าว 1 ทัพพี'],nt:'ขอปลาทูแบบนึ่ง ไม่เอาทอด เลี่ยงน้ำพริกเผ็ดจัด'},
+dn:{n:'แกงจืดวุ้นเส้นไก่สับ + ข้าวกล้องครึ่งทัพพี',s:'c',c:370,i:['วุ้นเส้น','อกไก่สับ','ตำลึง','ข้าวกล้องครึ่งทัพพี'],nt:'ปิดสัปดาห์แรกด้วยมื้อเย็นเบา ๆ <span class="rg">พรุ่งนี้ชั่งน้ำหนักตอนเช้า</span>',rc:'ปั้นไก่สับเป็นก้อน ต้มกับวุ้นเส้น-ตำลึง ปรุงซีอิ๊วขาวนิด'}}
+]},
+{r:'สัปดาห์ 2 · 20–26 มิ.ย. 69',sub:'ศุกร์ 26 เย็น เดินทางกลับบ้าน 🚗',lbl:['20','21','22','23','24','25','26'],h:[],hd:[6],d:[
+{bf:{n:'ไข่กระทะผักรวม + โฮลวีตปิ้ง',s:'c',c:360,i:['ไข่ 2 ฟอง','มะเขือเทศนิด-เห็ด-ผักโขม','โฮลวีต 1 แผ่น'],nt:'ไม่ใส่กุนเชียง-แฮม-เบคอน <span class="rg">ของแปรรูปมันสูง กระตุ้นกรด</span>',rc:'ใช้กระทะไฟฟ้าไฟอ่อน น้ำมัน 1 ชช. ตอกไข่ใส่ผัก ปิดฝาให้สุก'},
+ln:{n:'ข้าวกล้อง + ปลานิลย่างเกลือ + ผักสด',s:'c',c:470,i:['ปลานิลย่าง','ข้าวกล้อง 1 ทัพพี','แตงกวา-ถั่วฝักยาว','แจ่วอ่อน ๆ จิ้มนิด'],nt:'<span class="rg">น้ำจิ้มแจ่วเอาแบบเผ็ดน้อยมาก จิ้มพอรู้รส</span>',rc:'ย่างปลาทั้งตัวบนเตาไฟฟ้า พลิกทุก 6–7 นาทีจนสุก'},
+dn:{n:'เต้าหู้ตุ๋นทรงเครื่อง + ข้าวกล้องครึ่งทัพพี',s:'c',c:370,i:['เต้าหู้ไข่','เห็ดหอม','หมูสับไม่ติดมันนิด','ข้าวกล้องครึ่งทัพพี'],nt:'<span class="rg">นุ่ม อุ่น ย่อยง่าย — สูตรมื้อเย็นที่ดีที่สุดสำหรับกรดไหลย้อน</span>',rc:'เรียงเต้าหู้-เห็ด-หมูสับในถ้วย เติมน้ำซุป นึ่ง 15 นาที'}},
+{bf:{n:'ข้าวต้มกุ้ง ขิงอ่อน',s:'c',c:330,i:['กุ้งสด 5–6 ตัว','ข้าวกล้องต้ม','ขิง-ต้นหอม'],nt:'กุ้งไขมันต่ำ โปรตีนสูง',rc:'ต้มข้าวกับน้ำซุป ใส่กุ้งตอนท้าย 2 นาทีพอสุกเด้ง'},
+ln:{n:'ราดหน้าไก่ น้ำมันน้อย ไม่พริกดอง',s:'r',c:480,i:['เส้นใหญ่ลวก (ขอไม่ผัดมัน)','ไก่','คะน้าเยอะ ๆ'],nt:'<span class="rg">งดพริกดองน้ำส้ม</span> <span class="rd">ขอเส้นน้อยผักเยอะ</span>'},
+dn:{n:'สลัดอกไก่ย่าง น้ำสลัดงาญี่ปุ่นบาง ๆ',s:'c',c:380,i:['อกไก่ย่าง','ผักสลัด-อะโวคาโดถ้ามี','น้ำสลัดงา 1 ชต.'],nt:'มื้อเย็นโลว์คาร์บ <span class="rd">คืนนี้น้ำตาลพักผ่อน</span>',rc:'ย่างอกไก่ หั่นสไลซ์ คลุกผัก ราดน้ำสลัดพอเคลือบ'}},
+{bf:{n:'แซนด์วิชโฮลวีตทูน่า + นมถั่วเหลืองไม่หวาน',s:'7',c:360,i:['แซนด์วิชโฮลวีตทูน่า','นมถั่วเหลืองไม่หวาน'],nt:'7-Eleven มื้อที่ 1/3'},
+ln:{n:'ร้านข้าวแกง: ไก่ผัดขิง + แกงจืดตำลึง',s:'r',c:470,i:['ไก่ผัดขิง','แกงจืดตำลึง','ข้าว 1 ทัพพี'],nt:'<span class="rg">ผัดขิงเป็นเมนูร้านข้าวแกงที่เป็นมิตรกับกระเพาะที่สุด</span>'},
+dn:{n:'ปลากะพงนึ่งขิง + ผักนึ่ง + ข้าวกล้องน้อย',s:'c',c:410,i:['ปลากะพงชิ้น','ขิงซอย','บรอกโคลีนึ่ง','ข้าวกล้องครึ่งทัพพี'],nt:'นึ่งหอม ๆ ไม่ต้องพึ่งซอสเยอะ',rc:'วางปลาบนจาน โปะขิง-ต้นหอม นึ่ง 12 นาที ราดซีอิ๊วขาวอุ่น 1 ชต.'}},
+{bf:{n:'โอ๊ตนม + แอปเปิ้ลหั่น + อัลมอนด์',s:'c',c:330,i:['ข้าวโอ๊ต','นมพร่องมันเนย','แอปเปิ้ลครึ่งลูก','อัลมอนด์ 6 เม็ด'],nt:'<span class="rd">ไขมันดีจากถั่วช่วยให้อิ่มถึงเที่ยง</span>',rc:'ต้มโอ๊ตกับนม โรยแอปเปิ้ลและอัลมอนด์'},
+ln:{n:'บะหมี่น้ำหมูแดง (ไม่หนัง-ไม่มัน) + ผักลวก',s:'r',c:460,i:['บะหมี่','หมูแดงล้วน','ผักกวางตุ้งลวกเพิ่ม'],nt:'ขอ "หมูแดงไม่ติดมัน ไม่เอาหนังหมูกรอบ น้ำใส"'},
+dn:{n:'ไข่ตุ๋น + ฟักทองนึ่ง + ข้าวกล้องครึ่งทัพพี',s:'c',c:360,i:['ไข่ตุ๋น 2 ฟอง','ฟักทองนึ่ง','ข้าวกล้องครึ่งทัพพี'],nt:'<span class="rd">ฟักทองหวานธรรมชาติ ดีกว่าของหวานหลังอาหาร</span>',rc:'นึ่งไข่ตุ๋นและฟักทองพร้อมกันในหม้ออเนกประสงค์'}},
+{bf:{n:'ข้าวต้มปลาช่อน',s:'c',c:330,i:['ปลาช่อน','ข้าวกล้องต้ม','ขิง-ขึ้นฉ่าย'],nt:'ปลาช่อนเนื้อแน่น โปรตีนสูง ไขมันต่ำ',rc:'ต้มน้ำซุปกับขิง ใส่ปลาช่อนหั่นชิ้น ตามด้วยข้าวต้ม'},
+ln:{n:'ข้าวกล้องอกไก่ย่าง + ไข่ต้ม 7-Eleven',s:'7',c:460,i:['กล่องข้าวกล้องอกไก่','ไข่ต้ม 1 ฟอง'],nt:'7-Eleven มื้อที่ 2/3 — เลือกซอสแยก ราดแค่ครึ่ง'},
+dn:{n:'ต้มจืดฟักไก่สับ + ข้าวกล้องครึ่งทัพพี',s:'c',c:360,i:['ฟักเขียว','อกไก่สับ','ข้าวกล้องครึ่งทัพพี'],nt:'<span class="rg">ฟักเขียวต้มสุกอ่อนโยนกับกระเพาะมาก</span>',rc:'ต้มฟักกับน้ำซุปจนใส ใส่ไก่สับปั้นก้อน ปรุงเบา ๆ'}},
+{bf:{n:'โฮลวีตปิ้ง + ไข่คนนมจืด + ฝรั่ง',s:'c',c:350,i:['โฮลวีต 2 แผ่น','ไข่คน 2 ฟอง (นมจืดแทนเนย)','ฝรั่งครึ่งลูก'],nt:'ไข่คนใช้นมจืด ไม่ใส่เนย-ครีม',rc:'ตีไข่กับนมจืด 2 ชต. คนไฟอ่อนในกระทะไฟฟ้า'},
+ln:{n:'ร้านข้าวแกง: ปลานึ่งสมุนไพร + ผัดบวบใส่ไข่',s:'r',c:470,i:['ปลานึ่ง','ผัดบวบไข่','ข้าว 1 ทัพพี'],nt:'บวบผัดไข่มันน้อย หวานธรรมชาติ'},
+dn:{n:'ซุปเต้าหู้สาหร่ายไก่ฉีก + ข้าวกล้องครึ่งทัพพี',s:'c',c:350,i:['เต้าหู้ไข่','สาหร่ายแห้ง','อกไก่ฉีก','ข้าวกล้องครึ่งทัพพี'],nt:'พรุ่งนี้เย็นเดินทาง — คืนนี้นอนให้พอ',rc:'ต้มน้ำซุป ใส่สาหร่าย เต้าหู้ ไก่ฉีก เดือดแล้วปิดไฟ'}},
+{bf:{n:'โยเกิร์ตกรีก + กล้วย + แครกเกอร์โฮลวีต',s:'7',c:330,i:['โยเกิร์ตกรีกไม่หวาน','กล้วย 1 ลูก','แครกเกอร์โฮลวีต 3 แผ่น'],nt:'7-Eleven มื้อที่ 3/3'},
+ln:{n:'เกาเหลาหมูตุ๋น (ไม่เครื่องใน) + ข้าวกล้อง',s:'r',c:450,i:['เกาเหลาน้ำใส','หมูตุ๋นไม่ติดมัน','ข้าว 1 ทัพพี'],nt:'<span class="rg">งดเครื่องใน (พิวรีน-ไขมันสูง) เอาเนื้อล้วน</span> กินให้อิ่มหน่อย เย็นนี้เดินทาง'},
+dn:{n:'🚗 เดินทางกลับบ้าน — มื้อเบาระหว่างทาง',s:'o',c:350,i:['แซนด์วิชโฮลวีต','นมจืดกล่องเล็ก','กล้วย 1 ลูก'],nt:'<span class="rg">งดของทอดร้านปั๊ม-กาแฟเย็น</span> ถึงบ้านแล้วไม่ต้องกินซ้ำมื้อใหญ่ พรุ่งนี้ค่อยฉลอง'}}
+]},
+{r:'สัปดาห์ 3 · 27 มิ.ย. – 3 ก.ค. 69',sub:'🏠 เสาร์-อาทิตย์อยู่บ้าน · อาทิตย์เย็นเดินทางกลับที่พัก',lbl:['27','28','29','30','1','2','3'],h:[0,1],hd:[1],d:[
+{bf:{n:'ข้าวต้มทรงเครื่องฝีมือที่บ้าน',s:'h',c:350,i:['ข้าวต้ม','หมู/ไก่ไม่ติดมัน','ไข่ลวก','ขิง'],nt:'🏠 ตื่นสาย ๆ ได้ แต่อย่าข้ามมื้อเช้า'},
+ln:{n:'อาหารบ้าน: แกงจืดเต้าหู้ + ปลาทูนึ่ง + ข้าวกล้อง',s:'h',c:450,i:['แกงจืดเต้าหู้หมูสับ','ปลาทูนึ่ง','ข้าวกล้อง 1 ทัพพี','ผักสด'],nt:'ฝากที่บ้านหุงข้าวกล้องไว้เลยทั้งสุดสัปดาห์'},
+dn:{n:'ปลาเผาเกลือ + ชาบูหม้อน้ำใสกับครอบครัว',s:'h',c:600,rw:1,i:['ปลาเผาเกลือ','ผัก-เห็ดลวกเยอะ ๆ','วุ้นเส้น','น้ำจิ้มแยก จิ้มน้อย'],nt:'มื้อพิเศษ (ยกมาจากสัปดาห์ 2)! กินกับครอบครัวให้เต็มที่ <span class="rg">แต่จบก่อน 19:00 และน้ำจิ้มสุกี้จิ้มพอรู้รส อย่าราด</span> <span class="rd">งดน้ำอัดลม-เบียร์ ดื่มน้ำเปล่า/โซดาเปล่า</span>'}},
+{bf:{n:'โจ๊กไก่บ้าน + ไข่ลวก',s:'h',c:350,i:['โจ๊กไก่','ไข่ลวก','ขิงซอย'],nt:'เช้าวันอาทิตย์สบาย ๆ ที่บ้าน'},
+ln:{n:'ข้าวกล้อง + ไก่อบสมุนไพร + ผักลวกน้ำพริกอ่อน',s:'h',c:480,i:['ไก่อบสมุนไพร (ไม่หนัง)','ผักลวก','น้ำพริกเผ็ดน้อย ชิมพอ','ข้าวกล้อง 1 ทัพพี'],nt:'มื้อสุดท้ายที่บ้านรอบนี้ — บ่ายเก็บของ อย่าลืมหอบข้าวกล้อง/ของแห้งกลับที่พัก (ดูแท็บ Shopping List → Stock)'},
+dn:{n:'🚗 เดินทางกลับที่พัก — กินเบา ๆ ก่อนออก',s:'o',c:350,i:['แซนด์วิชโฮลวีต/ข้าวกล่องเล็กจากบ้าน','นมจืด','ฝรั่ง'],nt:'<span class="rg">กินก่อนขับรถ อย่ากินบนรถแล้วถึงที่พักนอนเลย — เว้น 3 ชม.ก่อนนอนเสมอ</span>'}},
+{bf:{n:'โอ๊ตนมพร่องมันเนย + กล้วย',s:'c',c:310,i:['ข้าวโอ๊ต','นมพร่องมันเนย','กล้วยครึ่งลูก'],nt:'เช้านี้แวะตลาด/Lotus\'s ซื้อของรอบ 1 (สัปดาห์กลับบ้าน รอบซื้อเลื่อนมาจันทร์เช้า)',rc:'ต้มโอ๊ตกับนม 5 นาที'},
+ln:{n:'ร้านข้าวแกง: ผัดฟักทองใส่ไข่ + ปลานึ่ง',s:'r',c:470,i:['ผัดฟักทองไข่','ปลานึ่ง','ข้าว 1 ทัพพี'],nt:'<span class="rd">ฟักทองให้แป้งช้า อิ่มนาน</span>'},
+dn:{n:'อกไก่ย่าง + ผักย่าง + มันหวานนึ่งลูกเล็ก',s:'c',c:420,i:['อกไก่ 120 ก.','ซูกินี-เห็ดย่าง','มันหวานนึ่ง 1 ลูกเล็ก'],nt:'<span class="rd">มันหวาน GI ต่ำกว่าข้าวขาวมาก</span>',rc:'ย่างไก่และผักบนเตาไฟฟ้า มันหวานนึ่งในหม้ออเนกประสงค์ 20 นาที'}},
+{bf:{n:'ข้าวต้มไก่ ขิง',s:'c',c:320,i:['ข้าวกล้องต้ม','อกไก่','ขิง'],nt:'สูตรประจำ อุ่นท้องก่อนไปไซต์',rc:'ต้มข้าวกับซุปไก่ ใส่ไก่ฉีก ขิงซอย'},
+ln:{n:'ก๋วยเตี๋ยวหมูตุ๋นน้ำใส ไม่เครื่องใน',s:'r',c:450,i:['เส้นเล็ก','หมูตุ๋นเนื้อล้วน','ผักลวกเพิ่ม'],nt:'ขอ "น้ำใส ไม่เครื่องใน ไม่พริก"'},
+dn:{n:'แกงจืดสาหร่ายเต้าหู้หมูสับ + ข้าวกล้องครึ่งทัพพี',s:'c',c:360,i:['สาหร่าย','เต้าหู้ไข่','หมูสับไม่ติดมัน','ข้าวกล้องครึ่งทัพพี'],nt:'เย็นซื้อของรอบ 2 ระหว่างกลับจากไซต์',rc:'ต้มน้ำเดือด ใส่หมูปั้นก้อน เต้าหู้ สาหร่าย ปิดไฟ'}},
+{bf:{n:'แซนด์วิชโฮลวีตไข่ขาว + นมจืด',s:'7',c:340,i:['แซนด์วิชไข่ขาวโฮลวีต','นมจืดพร่องมันเนย'],nt:'7-Eleven มื้อที่ 1/2 ของสัปดาห์นี้ (สัปดาห์นี้ใช้แค่ 2 มื้อ)'},
+ln:{n:'ข้าวกล้อง + ปลานิลนึ่งซีอิ๊ว + ผักลวก',s:'c',c:460,i:['ปลานิลครึ่งตัว','ข้าวกล้อง 1 ทัพพี','ผักลวก'],nt:'ทำเผื่อเย็น: นึ่งปลาทีเดียว แบ่งครึ่ง',rc:'นึ่งปลากับขิง 12 นาที ราดซีอิ๊วขาว'},
+dn:{n:'ไข่ตุ๋นเห็ดหอม + ข้าวกล้องครึ่งทัพพี + ผักนึ่ง',s:'c',c:360,i:['ไข่ตุ๋น','เห็ดหอม','ผักนึ่ง','ข้าวกล้องครึ่งทัพพี'],nt:'<span class="rg">เมนูเย็นมาตรฐานของคนเป็นกรดไหลย้อน</span>',rc:'นึ่งไข่ตุ๋นไฟอ่อน 12 นาที'}},
+{bf:{n:'โฮลวีตปิ้ง + ไข่ต้ม + แก้วมังกร',s:'c',c:340,i:['โฮลวีต 2 แผ่น','ไข่ต้ม 2 ฟอง','แก้วมังกรครึ่งลูก'],nt:'<span class="rd">แก้วมังกร GI ต่ำ ใยอาหารสูง</span>',rc:'ปิ้งขนมปัง ต้มไข่ 8 นาที'},
+ln:{n:'สุกี้น้ำรวมมิตร น้ำจิ้มแยก',s:'r',c:440,i:['วุ้นเส้น','ไก่-กุ้ง','ผักเยอะ'],nt:'<span class="rg">น้ำจิ้มจิ้มน้อย</span> เหมือนเดิม'},
+dn:{n:'ซุปฟักทองไก่ฉีก + โฮลวีต 1 แผ่น',s:'c',c:370,i:['ฟักทอง','อกไก่ฉีก','โฮลวีต 1 แผ่น'],nt:'อุ่น นุ่ม หลับสบาย',rc:'ต้มฟักทองจนนุ่ม บดหยาบ ใส่ไก่ฉีก ปรุงเกลือนิด'}},
+{bf:{n:'โยเกิร์ตกรีก + ข้าวโอ๊ต + กล้วย',s:'7',c:320,i:['โยเกิร์ตกรีกไม่หวาน','ข้าวโอ๊ต','กล้วย 1 ลูก'],nt:'7-Eleven มื้อที่ 2/2'},
+ln:{n:'ร้านข้าวแกง: ปลาช่อนนึ่ง + แจ่วอ่อน + ผักลวก',s:'r',c:470,i:['ปลาช่อนนึ่ง','แจ่วเผ็ดน้อยจิ้มนิด','ผักลวก','ข้าว 1 ทัพพี'],nt:'ศุกร์นี้ไม่ได้กลับบ้าน — สัปดาห์หน้าศุกร์ 10 ก.ค. ได้กลับแล้ว'},
+dn:{n:'เต้าหู้ทรงเครื่องนึ่ง + ข้าวกล้องครึ่งทัพพี',s:'c',c:360,i:['เต้าหู้ขาว','เห็ด-แครอท','อกไก่สับนิด','ข้าวกล้องครึ่งทัพพี'],nt:'ครบ 3 สัปดาห์แล้ว — สังเกตอาการแสบร้อนกลางอก ดีขึ้นไหม? จดไว้',rc:'นึ่งเต้าหู้กับเครื่อง 15 นาที ราดซีอิ๊วขาวอุ่น'}}
+]},
+{r:'สัปดาห์ 4 · 4–10 ก.ค. 69',sub:'ศุกร์ 10 เย็น เดินทางกลับบ้าน 🚗 (อยู่บ้าน 11–12 ก.ค.)',lbl:['4','5','6','7','8','9','10'],h:[],hd:[6],d:[
+{bf:{n:'ไข่กระทะผักรวม + โฮลวีตปิ้ง',s:'c',c:360,i:['ไข่ 2 ฟอง','เห็ด-ผักโขม','โฮลวีต 1 แผ่น'],nt:'สูตรเดิมจากสัปดาห์ 2 ที่ทำง่ายสุด',rc:'กระทะไฟฟ้าไฟอ่อน น้ำมัน 1 ชช. ปิดฝาให้ไข่สุก'},
+ln:{n:'ข้าวกล้อง + ปลาทูนึ่ง + น้ำพริกอ่อน + ผักลวก',s:'c',c:460,i:['ปลาทูนึ่ง 2 ตัว','น้ำพริกเผ็ดน้อย','ผักลวก','ข้าวกล้อง 1 ทัพพี'],nt:'<span class="rg">น้ำพริกตำเองลดพริกได้ตามใจ</span>',rc:'อุ่นปลาทูนึ่งบนเตาไฟฟ้า (ไม่ทอด) ลวกผักจิ้ม'},
+dn:{n:'แกงจืดผักกาดขาวเต้าหู้ + ข้าวกล้องครึ่งทัพพี',s:'c',c:360,i:['ผักกาดขาว','เต้าหู้ไข่','หมูสับนิด','ข้าวกล้องครึ่งทัพพี'],nt:'สัปดาห์สุดท้ายของแผน เริ่มเบา ๆ',rc:'ต้มผักกาดขาวกับเต้าหู้ ปรุงเบา'}},
+{bf:{n:'ข้าวต้มปลานิล',s:'c',c:320,i:['ปลานิล','ข้าวกล้องต้ม','ขิง'],nt:'',rc:'ต้มข้าวกับซุป ใส่ปลา ขิงซอย'},
+ln:{n:'เกี๊ยวน้ำไก่ + ลวกผักเพิ่ม',s:'r',c:440,i:['เกี๊ยวไก่','น้ำซุปใส','ผักลวก'],nt:'ขอน้ำใส ไม่กระเทียมเจียว'},
+dn:{n:'สลัดไก่ย่าง + มันหวานนึ่ง',s:'c',c:400,i:['อกไก่ย่าง','ผักสลัด','มันหวานนึ่งลูกเล็ก','น้ำสลัดใส'],nt:'<span class="rd">คาร์บจากมันหวาน คุมน้ำตาลง่าย</span>',rc:'ย่างไก่ นึ่งมันหวาน 20 นาที จัดจานรวม'}},
+{bf:{n:'แซนด์วิชโฮลวีตอกไก่ + นมถั่วเหลืองไม่หวาน',s:'7',c:360,i:['แซนด์วิชโฮลวีตอกไก่','นมถั่วเหลืองไม่หวาน'],nt:'7-Eleven มื้อที่ 1/3'},
+ln:{n:'ร้านข้าวแกง: เต้าหู้ผัดถั่วงอก + แกงจืดตำลึง',s:'r',c:450,i:['เต้าหู้ผัดถั่วงอก','แกงจืดตำลึง','ข้าว 1 ทัพพี'],nt:'เลือกผัดที่มันน้อย ๆ'},
+dn:{n:'ปลากะพงนึ่งซีอิ๊ว + ผักนึ่ง + ข้าวกล้องน้อย',s:'c',c:410,i:['ปลากะพงชิ้น','ผักนึ่ง','ข้าวกล้องครึ่งทัพพี'],nt:'',rc:'นึ่งปลากับขิง 12 นาที ราดซีอิ๊วขาวอุ่น'}},
+{bf:{n:'โอ๊ตนม + แอปเปิ้ล',s:'c',c:320,i:['ข้าวโอ๊ต','นมพร่องมันเนย','แอปเปิ้ลครึ่งลูก'],nt:'',rc:'ต้มโอ๊ตกับนม โรยแอปเปิ้ลหั่น'},
+ln:{n:'ข้าวกล้อง + อกไก่ย่างงา + บรอกโคลีลวก',s:'c',c:450,i:['อกไก่ย่างโรยงาคั่ว','บรอกโคลี','ข้าวกล้อง 1 ทัพพี'],nt:'<span class="rd">โปรตีน+ผักก่อน ข้าวทีหลัง</span>',rc:'ย่างไก่ โรยงาคั่วตอนใกล้สุก'},
+dn:{n:'ไข่ตุ๋นทรงเครื่อง + ข้าวกล้องครึ่งทัพพี',s:'c',c:350,i:['ไข่ตุ๋น','เห็ด-แครอท','ข้าวกล้องครึ่งทัพพี'],nt:'พรุ่งนี้มื้อพิเศษ! คืนนี้เบา ๆ ก่อน',rc:'นึ่งไฟอ่อน 12 นาที'}},
+{bf:{n:'ข้าวต้มไก่ฉีก ขิง',s:'c',c:320,i:['ข้าวกล้องต้ม','ไก่ฉีก','ขิง'],nt:'',rc:'สูตรประจำ ต้ม 10 นาที'},
+ln:{n:'ข้าวกล้องไก่ย่าง 7-Eleven',s:'7',c:450,i:['กล่องข้าวกล้องไก่ย่าง ไม่เผ็ด'],nt:'7-Eleven มื้อที่ 2/3'},
+dn:{n:'สเต๊กอกไก่ซอสเห็ด + มันอบ + ผักย่าง',s:'c',c:540,rw:1,i:['อกไก่ 150 ก.','ซอสเห็ดทำเอง (น้ำซุป+เห็ด)','มันฝรั่งอบ','ผักย่าง'],nt:'มื้อพิเศษประจำสัปดาห์! <span class="rg">ซอสทำจากน้ำซุปเคี่ยวเห็ด ไม่ใช้ครีม-เนย</span> จบก่อน 19:00',rc:'ทุบอกไก่ให้บางลง ย่างกระทะไฟฟ้าด้านละ 4–5 นาที เคี่ยวเห็ดกับน้ำซุป+ซีอิ๊วนิดจนงวดเป็นซอส'}},
+{bf:{n:'โฮลวีตปิ้ง + ไข่คน + ฝรั่ง',s:'c',c:350,i:['โฮลวีต 2 แผ่น','ไข่คน 2 ฟอง','ฝรั่งครึ่งลูก'],nt:'',rc:'ไข่คนใส่นมจืด ไฟอ่อน'},
+ln:{n:'บะหมี่น้ำหมูแดงไม่ติดมัน + ผักลวก',s:'r',c:460,i:['บะหมี่','หมูแดงล้วน','ผักลวก'],nt:'ขอน้ำใส ไม่หนังหมู'},
+dn:{n:'ต้มจืดฟักวุ้นเส้นไก่สับ',s:'c',c:350,i:['ฟักเขียว','วุ้นเส้น','อกไก่สับ'],nt:'พรุ่งนี้เย็นกลับบ้าน เก็บกระเป๋าแต่หัวค่ำ',rc:'ต้มฟักจนใส ใส่ไก่ปั้นก้อน วุ้นเส้นตอนท้าย'}},
+{bf:{n:'โยเกิร์ตกรีก + กล้วย + อัลมอนด์',s:'7',c:330,i:['โยเกิร์ตกรีกไม่หวาน','กล้วย 1 ลูก','อัลมอนด์ซอง 6–8 เม็ด'],nt:'7-Eleven มื้อที่ 3/3'},
+ln:{n:'ร้านข้าวแกง: ปลานึ่ง + ผัดผักรวม',s:'r',c:460,i:['ปลานึ่ง','ผัดผักรวมมันน้อย','ข้าว 1 ทัพพี'],nt:'กินอิ่มพอดี เย็นนี้เดินทาง'},
+dn:{n:'🚗 เดินทางกลับบ้าน — มื้อเบาระหว่างทาง',s:'o',c:350,i:['แซนด์วิชโฮลวีต','นมจืดกล่องเล็ก','ฝรั่ง/กล้วย'],nt:'จบแผน 4 สัปดาห์! 🎉 สุดสัปดาห์ 11–12 ก.ค. อยู่บ้าน มื้อพิเศษรออยู่ — แผนรอบถัดไปเริ่มเสาร์ 11 ก.ค. แจ้งปุณได้เลยครับ'}}
+]}
+];
+
+const SHOP=[
+{r:'สัปดาห์ 1 · 13–19 มิ.ย.',info:'🛒 <b>รอบ 1:</b> เสาร์ 13 เย็น (ใช้ ส–อา–จ) · <b>รอบ 2:</b> อังคาร 16 เย็น (ใช้ อ–ศ) · ของสดเก็บไม่เกิน 3 วัน',items:[
+{n:'ปลานิลสด',q:'2 ตัวเล็ก',cat:'protein',round:'1',store:'market',tip:'ตัวแรกต้มข้าวต้ม ส.13 / ตัวสองนึ่ง อา.14 เลือกตาใส เหงือกแดง'},
+{n:'ปลาทับทิม',q:'1 ตัว',cat:'protein',round:'1',store:'market',tip:'นึ่งซีอิ๊ว อา.14 เย็น'},
+{n:'อกไก่',q:'500 ก.',cat:'protein',round:'1',store:'lotus',tip:'ย่าง ส.13 เที่ยง + ฉีกทำข้าวต้ม อ.16 เช้า'},
+{n:'หมูสับไม่ติดมัน',q:'200 ก.',cat:'protein',round:'1',store:'market',tip:'แกงจืด ส.13 เย็น'},
+{n:'ไข่ไก่',q:'10 ฟอง',cat:'protein',round:'1',store:'lotus',tip:'ใช้ทั้งสัปดาห์'},
+{n:'เต้าหู้ไข่',q:'3 หลอด',cat:'protein',round:'1',store:'lotus',tip:'แกงจืด/ไข่ตุ๋น'},
+{n:'คะน้า-กวางตุ้ง',q:'อย่างละ 1 กำ',cat:'veg',round:'1',store:'market',tip:'ลวกกินกับข้าว'},
+{n:'ผักกาดขาว',q:'1 หัวเล็ก',cat:'veg',round:'1',store:'market',tip:'แกงจืด'},
+{n:'ขิงอ่อน',q:'1 แง่ง',cat:'veg',round:'1',store:'market',tip:'ตัวช่วยกรดไหลย้อน ใส่ข้าวต้มทุกเช้า'},
+{n:'กล้วยหอม',q:'1 หวีเล็ก',cat:'fruit',round:'1',store:'lotus',tip:'มื้อเช้า+ของว่าง'},
+{n:'ฝรั่ง',q:'2 ลูก',cat:'fruit',round:'1',store:'market',tip:'ของว่าง GI ต่ำ'},
+{n:'นมจืดพร่องมันเนย',q:'2 กล่องใหญ่',cat:'drink',round:'1',store:'lotus',tip:'ต้มโอ๊ต+ดื่ม'},
+{n:'ปลาแซลมอน',q:'1 ชิ้น 150 ก.',cat:'protein',round:'2',store:'lotus',tip:'🎉 มื้อพิเศษ พ.17 เย็น ซื้ออังคารเก็บช่องแช่แข็ง'},
+{n:'อกไก่ (เพิ่ม)',q:'300 ก.',cat:'protein',round:'2',store:'lotus',tip:'ย่างสลัด อ.16 / ซุปไก่ พฤ.18'},
+{n:'เต้าหู้ขาวแข็ง',q:'2 ก้อน',cat:'protein',round:'2',store:'market',tip:'ผัดผัก พฤ.18'},
+{n:'มันฝรั่ง',q:'2 หัว',cat:'carb',round:'2',store:'lotus',tip:'อบคู่แซลมอน พ.17'},
+{n:'ฟักทอง',q:'1/4 ลูก',cat:'veg',round:'2',store:'market',tip:'ซุป พฤ.18'},
+{n:'ผักสลัด+แตงกวา',q:'1 ถุง',cat:'veg',round:'2',store:'lotus',tip:'สลัด อ.16 เย็น'},
+{n:'ซูกินี-เห็ด-พริกหวาน',q:'อย่างละนิด',cat:'veg',round:'2',store:'lotus',tip:'ผักย่างคู่แซลมอน'},
+{n:'ตำลึง+วุ้นเส้น',q:'1 กำ + 2 ห่อเล็ก',cat:'veg',round:'2',store:'market',tip:'แกงจืด ศ.19'},
+{n:'แซนด์วิชโฮลวีตอกไก่ + นมจืด',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'จ.15 เช้า'},
+{n:'ข้าวกล้องไก่ย่าง (ไม่เผ็ด)',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'พ.17 เที่ยง'},
+{n:'โยเกิร์ตกรีกไม่หวาน + กล้วย',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'ศ.19 เช้า'}
+]},
+{r:'สัปดาห์ 2 · 20–26 มิ.ย.',info:'🛒 <b>รอบ 1:</b> เสาร์ 20 เย็น · <b>รอบ 2:</b> อังคาร 23 เย็น · ศุกร์ 26 เย็นเดินทาง — อย่าซื้อของสดค้างตู้เย็น',items:[
+{n:'กุ้งสด',q:'200 ก.',cat:'protein',round:'1',store:'market',tip:'ข้าวต้มกุ้ง อา.21 เช้า'},
+{n:'ปลานิล',q:'1 ตัว',cat:'protein',round:'1',store:'market',tip:'ย่างเกลือ ส.20 เที่ยง'},
+{n:'ปลากะพง',q:'1 ชิ้น',cat:'protein',round:'1',store:'lotus',tip:'นึ่งขิง จ.22 เย็น'},
+{n:'อกไก่',q:'500 ก.',cat:'protein',round:'1',store:'lotus',tip:'สลัด อา.21 / แบ่งแช่แข็ง'},
+{n:'ไข่ไก่',q:'10 ฟอง',cat:'protein',round:'1',store:'lotus',tip:''},
+{n:'เต้าหู้ไข่',q:'2 หลอด',cat:'protein',round:'1',store:'lotus',tip:'ตุ๋น ส.20 เย็น'},
+{n:'หมูสับไม่ติดมัน',q:'150 ก.',cat:'protein',round:'1',store:'market',tip:'ใส่เต้าหู้ตุ๋น'},
+{n:'ผักสลัด',q:'1 ถุง',cat:'veg',round:'1',store:'lotus',tip:'อา.21 เย็น'},
+{n:'ผักโขม-เห็ด-มะเขือเทศ',q:'อย่างละนิด',cat:'veg',round:'1',store:'market',tip:'ไข่กระทะ ส.20 เช้า (มะเขือเทศใส่นิดเดียวพอ)'},
+{n:'แตงกวา-ถั่วฝักยาว',q:'1 ชุด',cat:'veg',round:'1',store:'market',tip:'ผักสดแนม'},
+{n:'กล้วย + แอปเปิ้ล',q:'หวีเล็ก + 2 ลูก',cat:'fruit',round:'1',store:'lotus',tip:'เช้า+ของว่าง'},
+{n:'ปลาช่อน',q:'1 ตัวเล็ก',cat:'protein',round:'2',store:'market',tip:'ข้าวต้ม พ.24 เช้า'},
+{n:'ฟักเขียว',q:'1 ชิ้น',cat:'veg',round:'2',store:'market',tip:'ต้มจืด พ.24 เย็น'},
+{n:'ฟักทอง',q:'1/4 ลูก',cat:'veg',round:'2',store:'market',tip:'นึ่งคู่ไข่ตุ๋น อ.23'},
+{n:'สาหร่ายแห้ง',q:'1 ห่อ',cat:'condiment',round:'2',store:'lotus',tip:'ซุป พฤ.25 (เหลือใช้สัปดาห์ 3)'},
+{n:'เต้าหู้ไข่ (เพิ่ม)',q:'2 หลอด',cat:'protein',round:'2',store:'lotus',tip:'ซุป พฤ.25'},
+{n:'ฝรั่ง',q:'2 ลูก',cat:'fruit',round:'2',store:'market',tip:'เช้า พฤ.25 + ของว่าง'},
+{n:'แซนด์วิชโฮลวีตทูน่า + นมถั่วเหลือง',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'จ.22 เช้า'},
+{n:'ข้าวกล้องอกไก่ + ไข่ต้ม',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'พ.24 เที่ยง'},
+{n:'โยเกิร์ตกรีก + กล้วย + แครกเกอร์',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'ศ.26 เช้า'},
+{n:'แซนด์วิชโฮลวีต + นมจืดกล่องเล็ก',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'ศ.26 เย็น — มื้อเดินทางกลับบ้าน'}
+]},
+{r:'สัปดาห์ 3 · 27 มิ.ย. – 3 ก.ค.',info:'🏠 สุดสัปดาห์อยู่บ้าน (เสาร์-อาทิตย์ ที่บ้านจัดการ) · <b>รอบ 1 เลื่อนเป็น จันทร์ 29 เช้า</b> (ใช้ จ–อ) · <b>รอบ 2: อังคาร 30 เย็น</b> (ใช้ พ–ศ) · 📦 ของแห้ง/Stock ซื้อช่วงอยู่บ้าน เสาร์ 27 – อาทิตย์ 28',items:[
+{n:'อกไก่',q:'400 ก.',cat:'protein',round:'1',store:'lotus',tip:'ย่าง จ.29 เย็น + ฉีกข้าวต้ม อ.30 เช้า'},
+{n:'มันหวาน',q:'2 หัวเล็ก',cat:'carb',round:'1',store:'market',tip:'นึ่งคู่ไก่ย่าง จ.29'},
+{n:'ซูกินี-เห็ด',q:'1 ชุด',cat:'veg',round:'1',store:'lotus',tip:'ผักย่าง จ.29'},
+{n:'ขิงอ่อน',q:'1 แง่ง',cat:'veg',round:'1',store:'market',tip:''},
+{n:'กล้วยหอม',q:'1 หวีเล็ก',cat:'fruit',round:'1',store:'lotus',tip:''},
+{n:'นมจืดพร่องมันเนย',q:'2 กล่องใหญ่',cat:'drink',round:'1',store:'lotus',tip:''},
+{n:'หมูสับไม่ติดมัน',q:'150 ก.',cat:'protein',round:'1',store:'market',tip:'แกงจืด อ.30 เย็น'},
+{n:'ปลานิล',q:'1 ตัว',cat:'protein',round:'2',store:'market',tip:'นึ่ง พ.1 — แบ่งครึ่งไว้สองมื้อ'},
+{n:'เต้าหู้ไข่ + เต้าหู้ขาว',q:'2 หลอด + 1 ก้อน',cat:'protein',round:'2',store:'lotus',tip:'ไข่ตุ๋น พ.1 / เต้าหู้นึ่ง ศ.3'},
+{n:'ไข่ไก่',q:'10 ฟอง',cat:'protein',round:'2',store:'lotus',tip:''},
+{n:'เห็ดหอมสด',q:'1 แพ็ค',cat:'veg',round:'2',store:'lotus',tip:'ไข่ตุ๋น พ.1'},
+{n:'ฟักทอง',q:'1/4 ลูก',cat:'veg',round:'2',store:'market',tip:'ซุป พฤ.2'},
+{n:'ผักนึ่งรวม (บรอกโคลี-แครอท)',q:'1 ชุด',cat:'veg',round:'2',store:'lotus',tip:''},
+{n:'แก้วมังกร + ฝรั่ง',q:'1 ลูก + 2 ลูก',cat:'fruit',round:'2',store:'market',tip:'เช้า พฤ.2 + ของว่าง'},
+{n:'แซนด์วิชไข่ขาวโฮลวีต + นมจืด',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'พ.1 เช้า'},
+{n:'โยเกิร์ตกรีก + โอ๊ต + กล้วย',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'ศ.3 เช้า'},
+{n:'ข้าวกล้อง',q:'ถุง 5 กก.',cat:'stock',round:'stock',store:'lotus',tip:'📦 ซื้อตอนอยู่บ้าน หอบกลับที่พัก — หัวใจของแผนคุมน้ำตาล'},
+{n:'ข้าวโอ๊ต',q:'1 กล่องใหญ่',cat:'stock',round:'stock',store:'lotus',tip:'📦 มื้อเช้า GI ต่ำ'},
+{n:'ขนมปังโฮลวีต',q:'2 แถว',cat:'stock',round:'stock',store:'lotus',tip:'📦 แถวสองแช่แข็งไว้'},
+{n:'ซีอิ๊วขาวโซเดียมต่ำ',q:'1 ขวด',cat:'stock',round:'stock',store:'lotus',tip:'📦 เครื่องปรุงหลักของแผนนี้'},
+{n:'น้ำมันรำข้าว',q:'1 ขวดเล็ก',cat:'stock',round:'stock',store:'lotus',tip:'📦 ใช้ทีละ 1 ชช.'},
+{n:'งาคั่ว + อัลมอนด์',q:'อย่างละ 1 ถุง',cat:'stock',round:'stock',store:'lotus',tip:'📦 ของว่าง + โรยอาหาร'},
+{n:'นมถั่วเหลืองไม่หวาน',q:'1 แพ็ค',cat:'stock',round:'stock',store:'lotus',tip:'📦 สำรองตอนนมจืดหมด'},
+{n:'วุ้นเส้น',q:'1 ห่อใหญ่',cat:'stock',round:'stock',store:'lotus',tip:'📦 เส้น GI ต่ำสุดในบรรดาเส้น'}
+]},
+{r:'สัปดาห์ 4 · 4–10 ก.ค.',info:'🛒 <b>รอบ 1:</b> เสาร์ 4 เย็น · <b>รอบ 2:</b> อังคาร 7 เย็น · ศุกร์ 10 เย็นเดินทาง — เคลียร์ตู้เย็นให้หมดก่อนกลับ',items:[
+{n:'ปลาทูนึ่ง',q:'4 ตัว (2 เข่ง)',cat:'protein',round:'1',store:'market',tip:'เที่ยง ส.4 — เลือกตัวแน่น ไม่เละ'},
+{n:'ปลานิล',q:'1 ตัว',cat:'protein',round:'1',store:'market',tip:'ข้าวต้ม อา.5 เช้า'},
+{n:'อกไก่',q:'500 ก.',cat:'protein',round:'1',store:'lotus',tip:'สลัด อา.5 / แบ่งแช่แข็งไว้ทำสเต๊ก พ.8'},
+{n:'ไข่ไก่',q:'10 ฟอง',cat:'protein',round:'1',store:'lotus',tip:''},
+{n:'เต้าหู้ไข่',q:'2 หลอด',cat:'protein',round:'1',store:'lotus',tip:'แกงจืด ส.4 เย็น'},
+{n:'หมูสับไม่ติดมัน',q:'100 ก.',cat:'protein',round:'1',store:'market',tip:''},
+{n:'ผักกาดขาว + ผักลวกรวม',q:'1 ชุด',cat:'veg',round:'1',store:'market',tip:''},
+{n:'ผักสลัด',q:'1 ถุง',cat:'veg',round:'1',store:'lotus',tip:'อา.5 เย็น'},
+{n:'มันหวาน',q:'1 หัว',cat:'carb',round:'1',store:'market',tip:'คู่สลัดไก่ อา.5'},
+{n:'พริก-กระเทียม-มะนาว (น้ำพริกอ่อน)',q:'1 ชุดเล็ก',cat:'condiment',round:'1',store:'market',tip:'ตำเผ็ดน้อย ส.4 เที่ยง'},
+{n:'กล้วย + ฝรั่ง',q:'หวีเล็ก + 2 ลูก',cat:'fruit',round:'1',store:'market',tip:''},
+{n:'ปลากะพง',q:'1 ชิ้น',cat:'protein',round:'2',store:'lotus',tip:'นึ่ง จ.6 เย็น — แนะนำซื้อรอบ 1 แล้วแช่แข็งไว้แทน'},
+{n:'เห็ดแชมปิญอง/เห็ดรวม',q:'1 แพ็ค',cat:'veg',round:'2',store:'lotus',tip:'🎉 ซอสเห็ดสเต๊ก พ.8'},
+{n:'มันฝรั่ง',q:'2 หัว',cat:'carb',round:'2',store:'lotus',tip:'อบคู่สเต๊ก พ.8'},
+{n:'บรอกโคลี + ผักย่าง',q:'1 ชุด',cat:'veg',round:'2',store:'lotus',tip:'อ.7 เที่ยง + พ.8 เย็น'},
+{n:'ฟักเขียว',q:'1 ชิ้น',cat:'veg',round:'2',store:'market',tip:'ต้มจืด พฤ.9'},
+{n:'แอปเปิ้ล',q:'2 ลูก',cat:'fruit',round:'2',store:'lotus',tip:'เช้า อ.7 + ของว่าง'},
+{n:'แซนด์วิชโฮลวีตอกไก่ + นมถั่วเหลือง',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'จ.6 เช้า'},
+{n:'ข้าวกล้องไก่ย่าง (ไม่เผ็ด)',q:'1 กล่อง',cat:'shop7',round:'7',store:'7eleven',tip:'พ.8 เที่ยง'},
+{n:'โยเกิร์ตกรีก + กล้วย + อัลมอนด์',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'ศ.10 เช้า'},
+{n:'แซนด์วิชโฮลวีต + นมจืดกล่องเล็ก',q:'1 ชุด',cat:'shop7',round:'7',store:'7eleven',tip:'ศ.10 เย็น — มื้อเดินทางกลับบ้าน'}
+]}
+];
+
+const CAT_META={protein:{icon:'🥩',label:'โปรตีน (เนื้อ ปลา ไข่ เต้าหู้)'},veg:{icon:'🥬',label:'ผัก/สมุนไพร'},fruit:{icon:'🍎',label:'ผลไม้ GI ต่ำ'},carb:{icon:'🍠',label:'แป้ง/คาร์โบไฮเดรต'},drink:{icon:'🥛',label:'เครื่องดื่ม (ไม่หวานเท่านั้น)'},condiment:{icon:'🧂',label:'เครื่องปรุง'},shop7:{icon:'🏪',label:'7-Eleven (ซื้อตอนใช้)'},stock:{icon:'📦',label:'ของแห้ง/Stock (ซื้อตอนกลับบ้าน)'}};
+const STORE_META={lotus:{icon:'🛒',label:"Lotus's / Big C"},market:{icon:'🥬',label:'ตลาดสด'},'7eleven':{icon:'🏪',label:'7-Eleven'}};
+const ROUND_META={1:{icon:'1️⃣',label:'รอบที่ 1'},2:{icon:'2️⃣',label:'รอบที่ 2'},'7':{icon:'🏪',label:'7-Eleven (ซื้อตอนใช้)'},stock:{icon:'📦',label:'ของแห้ง/Stock'}};
+const sm={'c':{c:'tc',l:'ทำเอง'},'7':{c:'t7',l:'7-Eleven'},'r':{c:'ts',l:'ร้านอาหาร'},'h':{c:'th',l:'🏠 ที่บ้าน'},'o':{c:'to',l:'🚗 เดินทาง'}};
+
+let cw_=0,cd=0,csw_=0,slView='cat';
+
+function switchTab(t){
+  document.getElementById('t-meal').className='maintab'+(t==='meal'?' active':'');
+  document.getElementById('t-shop').className='maintab'+(t==='shop'?' active':'');
+  document.getElementById('view-meal').style.display=(t==='meal'?'block':'none');
+  document.getElementById('view-shop').style.display=(t==='shop'?'block':'none');
+  if(t==='shop')renderShop();
+}
+function switchSL(v){slView=v;document.querySelectorAll('.sl-vt').forEach(el=>el.classList.remove('active'));document.getElementById('sv-'+v).classList.add('active');renderShopContent();}
+function cw(dir){cw_=Math.max(0,Math.min(W.length-1,cw_+dir));cd=0;rd();}
+function csw(dir){csw_=Math.max(0,Math.min(SHOP.length-1,csw_+dir));renderShop();}
+
+function isReward(w,di){const d=W[w].d[di];return ['bf','ln','dn'].some(k=>d[k]&&d[k].rw);}
+function sd(i){cd=i;rm();drawTabs();}
+function drawTabs(){
+  const w=W[cw_];
+  document.getElementById('tabs').innerHTML=DAYS.map((d,j)=>{
+    let cls='dt'+(j===cd?' a':'');
+    if(w.h.includes(j))cls+=' h';
+    if(isReward(cw_,j))cls+=' rw';
+    return `<div class="${cls}" onclick="sd(${j})">${d}<small>${w.lbl[j]}</small></div>`;
+  }).join('');
+}
+function rm(){
+  const w=W[cw_],d=w.d[cd],ih=w.h.includes(cd);
+  const ms=[{k:'bf',l:'เช้า',c:'b-bf',t:'07:00'},{k:'ln',l:'กลางวัน',c:'b-ln',t:'12:00'},{k:'dn',l:'เย็น',c:'b-dn',t:'18:00–18:30'}];
+  let tot=0,h='';
+  if(ih)h+='<div class="banner home">🏠 วันนี้อยู่บ้าน — ยืดหยุ่นได้ แต่กฎกรดไหลย้อน + งดหวานยังใช้เหมือนเดิม</div>';
+  ms.forEach(m=>{
+    const meal=d[m.k];if(!meal)return;tot+=meal.c;
+    const si=sm[meal.s];
+    h+=`<div class="mc${meal.rw?' reward':''}">`;
+    if(meal.rw)h+='<div class="rwb">🎉 มื้อพิเศษประจำสัปดาห์ — รางวัลของคุณ!</div>';
+    h+=`<div class="mh"><span class="mb ${meal.rw?'b-sp':m.c}">${m.l}</span><span class="src ${si.c}">${si.l}</span><span class="mt">⏰ ${m.t}</span></div>`;
+    h+=`<div class="mn">${meal.n}</div>`;
+    h+=`<div class="items">${meal.i.map(x=>`<span class="it">${x}</span>`).join('')}</div>`;
+    if(meal.nt)h+=`<div class="note">💡 ${meal.nt}</div>`;
+    if(meal.rc)h+=`<div class="rcp"><b>วิธีทำ:</b> ${meal.rc}</div>`;
+    h+=`<div class="cal">พลังงาน ~${meal.c} kcal</div></div>`;
+  });
+  h+=`<div class="sum"><div class="t">สรุปรายวัน</div>
+  <div class="row"><span>3 มื้อหลัก: <b>~${tot} kcal</b></span><span>+ ของว่าง 2 มื้อ: <b>~250 kcal</b></span><span>รวม: <b>~${tot+250} kcal</b></span><span>เป้าหมาย: <b>1,500 kcal</b></span></div>
+  <div class="snack">🍎 <b>ของว่าง 09:30 และ 15:00</b> (เลือกครั้งละ 1): ฝรั่ง/แอปเปิ้ล/แก้วมังกรครึ่งลูก · กล้วย 1 ลูก · นมจืด/นมถั่วเหลืองไม่หวาน 1 กล่อง · อัลมอนด์ 1 กำมือ · โยเกิร์ตกรีกไม่หวาน — <b>การแบ่งกินมื้อเล็กบ่อย ๆ ช่วยทั้งกรดไหลย้อนและน้ำตาล</b></div></div>`;
+  document.getElementById('meal-content').innerHTML=h;
+}
+function rd(){
+  const w=W[cw_];
+  document.getElementById('wlabel').innerHTML=w.r+`<small>${w.sub}</small>`;
+  document.getElementById('wprev').disabled=(cw_===0);
+  document.getElementById('wnext').disabled=(cw_===W.length-1);
+  drawTabs();rm();
+}
+function renderShop(){
+  const s=SHOP[csw_];
+  document.getElementById('slabel').innerHTML=s.r+'<small>Shopping List</small>';
+  document.getElementById('sprev').disabled=(csw_===0);
+  document.getElementById('snext').disabled=(csw_===SHOP.length-1);
+  document.getElementById('slinfo').innerHTML=s.info;
+  renderShopContent();
+}
+function renderShopContent(){
+  const s=SHOP[csw_];let groups={};
+  const meta=slView==='cat'?CAT_META:(slView==='round'?ROUND_META:STORE_META);
+  const key=slView==='cat'?'cat':(slView==='round'?'round':'store');
+  s.items.forEach((it,idx)=>{const k=it[key];(groups[k]=groups[k]||[]).push({...it,idx});});
+  let h='';
+  Object.keys(meta).forEach(k=>{
+    if(!groups[k])return;
+    h+=`<div class="grp"><div class="gh">${meta[k].icon} ${meta[k].label}</div>`;
+    groups[k].forEach(it=>{
+      const id=`w${csw_}i${it.idx}`;
+      h+=`<div class="gi" id="g-${id}"><input type="checkbox" id="${id}" onchange="document.getElementById('g-${id}').classList.toggle('done',this.checked)"><div><span class="nm">${it.n}</span> <span class="q">· ${it.q}</span>${it.tip?`<div class="tip">${it.tip}</div>`:''}</div></div>`;
+    });
+    h+='</div>';
+  });
+  document.getElementById('shop-content').innerHTML=h;
+}
+rd();
+</script>
+</body>
+</html>
